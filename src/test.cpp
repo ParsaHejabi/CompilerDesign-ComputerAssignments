@@ -9,7 +9,7 @@
 '\t'
 ' '
 '\"'
-//"\n"
+"\n"
 //#include<iostream>
 //using namespace std;
 //int main(){

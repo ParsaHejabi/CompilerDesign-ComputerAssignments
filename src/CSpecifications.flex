@@ -128,3 +128,6 @@ CommentContent       = ( [^*] | \*+ [^/*] )*
 <ENDCHAR>{
 \'                                  {yybegin(YYINITIAL); return new Symbol(string.toString());}
 }
+
+/* error fallback */
+[^]                                 {throw new Error("Illegal character <"+yytext()+">");}
