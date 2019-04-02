@@ -34,8 +34,8 @@ FloatScientificLiteral = ([0-9]+)(e|E)((\+|-)?)([0-9]+)
 /* whitespace */
 NONNEWLINE_WHITE_SPACE_CHAR = [\ \t]
 NEWLINE = \r|\n|\r\n
-WHITE_SPACE_CHAR = [\n\r\ \t\b\012]
-WhiteSpace = {NONNEWLINE_WHITE_SPACE_CHAR} | {NEWLINE} | {WHITE_SPACE_CHAR}
+//WHITE_SPACE_CHAR = [\n\r\ \t\b\012]
+//WhiteSpace = {NONNEWLINE_WHITE_SPACE_CHAR} | {NEWLINE} | {WHITE_SPACE_CHAR}
 
 /* identifiers */
 //All variable names must begin with a letter of the alphabet or an underscore( _ ).
@@ -45,12 +45,14 @@ Identifier = ({ALPHA}|_)({ALPHA}|{DIGIT}|_)*
 InputCharacter = [^\r\n]
 Comment = {TraditionalComment} | {EndOfLineComment}
 TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-EndOfLineComment     = "//" {InputCharacter}* {NEWLINE}?
-CommentContent       = ( [^*] | \*+ [^/*] )*
+EndOfLineComment     = "//" {InputCharacter}*
+//CommentContent       = ( [^*] | \*+ [^/*] )*
 
 %state STRING
 %state CHAR
 %state ENDCHAR
+%state SPECIALCHARSTR
+%state SPECIALCHAR
 
 %%
 
@@ -98,8 +100,8 @@ CommentContent       = ( [^*] | \*+ [^/*] )*
 {HexIntegerLiteral}                 {return new Symbol(yytext(), 3);}
 {FloatLiteral}                      {return new Symbol(yytext(), 4);}
 {FloatScientificLiteral}            {return new Symbol(yytext(), 4);}
-\"                                  {string.setLength(0); yybegin(STRING);}
-\'                                  {string.setLength(0); yybegin(CHAR);}
+\"                                  {string.setLength(0); string.append(yytext()); yybegin(STRING);}
+\'                                  {string.setLength(0); string.append(yytext()); yybegin(CHAR);}
 
 /* comments */
 {Comment}                           {return new Symbol(yytext(), 7);}
@@ -111,27 +113,40 @@ CommentContent       = ( [^*] | \*+ [^/*] )*
 }
 
 <STRING>{
-\"                                  {yybegin(YYINITIAL); return new Symbol(string.toString(), 5);}
-[^\n\r\"\\]+                        {string.append(yytext());}
-\\t                                 {string.append('\t');}
-\\n                                 {string.append('\n');}
-\\r                                 {string.append('\r');}
-\\\"                                {string.append('\"');}
-\\                                  {string.append('\\');}
+\"                                  {yybegin(YYINITIAL); string.append(yytext()); return new Symbol(string.toString(), 5);}
+[^\n\r\"\\]                         {string.append(yytext());}
+\\                                  {yybegin(SPECIALCHARSTR); return new Symbol(string.toString(), 5);}
+}
+
+<SPECIALCHARSTR>{
+t                                   {yybegin(STRING); string.setLength(0); return new Symbol("\\t", 10);}
+n                                   {yybegin(STRING); string.setLength(0); return new Symbol("\\n", 10);}
+r                                   {yybegin(STRING); string.setLength(0); return new Symbol("\\r", 10);}
+\"                                  {yybegin(STRING); string.setLength(0); return new Symbol("\\\"", 10);}
+\'                                  {yybegin(STRING); string.setLength(0); return new Symbol("\\\'", 10);}
+\\                                  {yybegin(STRING); string.setLength(0); return new Symbol("\\\\", 10);}
+[^]                                 {throw new Error("Illegal character <"+yytext()+">"+" Line: " + yyline + ", Column: " + yycolumn);}
 }
 
 <CHAR>{
 [^\n\r\\\']                         {string.append(yytext()); yybegin(ENDCHAR);}
-\\t                                 {string.append('\t'); yybegin(ENDCHAR);}
-\\n                                 {string.append('\n'); yybegin(ENDCHAR);}
-\\r                                 {string.append('\r'); yybegin(ENDCHAR);}
-\\\"                                {string.append('\"'); yybegin(ENDCHAR);}
-\\                                  {string.append('\\'); yybegin(ENDCHAR);}
+\\t                                 {string.append("\\t"); yybegin(SPECIALCHAR);}
+\\n                                 {string.append("\\n"); yybegin(SPECIALCHAR);}
+\\r                                 {string.append("\\r"); yybegin(SPECIALCHAR);}
+\\\"                                {string.append("\\\""); yybegin(SPECIALCHAR);}
+\\\'                                {string.append("\\\'"); yybegin(SPECIALCHAR);}
+\\\\                                {string.append("\\\\"); yybegin(SPECIALCHAR);}
+}
+
+<SPECIALCHAR>{
+\'                                  {yybegin(YYINITIAL); string.append(yytext()); return new Symbol(string.toString(), 10);}
+[^]                                 {throw new Error("Illegal character <"+yytext()+">"+" Line: " + yyline + ", Column: " + yycolumn);}
 }
 
 <ENDCHAR>{
-\'                                  {yybegin(YYINITIAL); return new Symbol(string.toString(), 6);}
+\'                                  {yybegin(YYINITIAL); string.append(yytext()); return new Symbol(string.toString(), 6);}
+[^]                                 {throw new Error("Illegal character <"+yytext()+">"+" Line: " + yyline + ", Column: " + yycolumn);}
 }
 
 /* error fallback */
-[^]                                 {throw new Error("Illegal character <"+yytext()+">");}
+[^]                                 {return new Symbol(yytext(),100);}

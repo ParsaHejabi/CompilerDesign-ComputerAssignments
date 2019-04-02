@@ -11,8 +11,9 @@ public class Main {
                         "<title>" +
                         "C Scanner Output" +
                         "</title>" +
+                        "<link href=\"https://fonts.googleapis.com/css?family=Roboto\" rel=\"stylesheet\">" +
                         "</head>" +
-                        "<body>" +
+                        "<body style=\"font-family: 'Roboto', sans-serif;\">" +
                         "<p>"
         );
 
@@ -23,12 +24,12 @@ public class Main {
 //            System.out.println(symbol.id);
             switch (symbol.id){
                 case 1:
-                    stringBuffer.append("<b style=\"color:blue;\">" +
+                    stringBuffer.append("<b style=\"color:#2196F3;\">" +
                             symbol.string +
                             "</b>");
                     break;
                 case 2:
-                    stringBuffer.append("<span style=\"color:orange;\">" +
+                    stringBuffer.append("<span style=\"color:#FF9800;\">" +
                             symbol.string +
                             "</span>");
                     break;
@@ -38,12 +39,24 @@ public class Main {
                             "</span>");
                     break;
                 case 4:
+                    stringBuffer.append("<i style=\"color:#9C27B0;\">" +
+                            symbol.string +
+                            "</i>");
                     break;
                 case 5:
+                    stringBuffer.append("<span style=\"color:#F44336;\">" +
+                            symbol.string +
+                            "</span>");
                     break;
                 case 6:
+                    stringBuffer.append("<span style=\"color:#4CAF50;\">" +
+                            symbol.string +
+                            "</span>");
                     break;
                 case 7:
+                    stringBuffer.append("<span style=\"color:#9E9E9E;\">" +
+                            symbol.string +
+                            "</span>");
                     break;
                 case 8:
                     if (symbol.string.equals("\t")){
@@ -55,6 +68,16 @@ public class Main {
                     break;
                 case 9:
                     stringBuffer.append("<br>");
+                    break;
+                case 10:
+                    stringBuffer.append("<i style=\"color:#4CAF50;\">" +
+                            symbol.string +
+                            "</i>");
+                    break;
+                case 100:
+                    stringBuffer.append("<span>" +
+                            symbol.string +
+                            "</span>");
                     break;
             }
             symbol = cScanner.CScannerFunction();
