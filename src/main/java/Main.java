@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class Main {
                         "<body style=\"font-family: 'Roboto', sans-serif;\">" +
                         "<p>"
         );
-
-        FileReader fileReader = new FileReader("/Users/parsahejabi/University/Term 6/CompilerDesign/Homeworks/Scanner/src/main/java/test.cpp");
+        String cppFilePath = new File("").getAbsolutePath();
+        FileReader fileReader = new FileReader(cppFilePath + "/src/main/java/test.cpp");
         CScanner cScanner = new CScanner(fileReader);
         Symbol symbol = cScanner.CScannerFunction();
         while (symbol != null){

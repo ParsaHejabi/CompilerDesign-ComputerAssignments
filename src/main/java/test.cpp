@@ -9,7 +9,7 @@ int main(){
     double secondDouble = 42e1;
     string str = "salam";
     char ch = 'a';
-    string str2 = "salam\tchetori";
+    string str2 = "salam\n\tchetori";
     char ch2 = '\"';
     char ch3 = 'c';
     return 0;
