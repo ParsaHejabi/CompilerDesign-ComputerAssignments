@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(
                 "<html>" +
                         "<head>" +
                         "<title>" +
@@ -21,75 +21,55 @@ public class Main {
         FileReader fileReader = new FileReader(cppFilePath + "/src/main/java/test.cpp");
         CScanner cScanner = new CScanner(fileReader);
         Symbol symbol = cScanner.CScannerFunction();
-        while (symbol != null){
-//            System.out.println(symbol.id);
-            switch (symbol.id){
+        while (symbol != null) {
+            switch (symbol.id) {
                 case 1:
-                    stringBuffer.append("<b style=\"color:#2196F3;\">" +
-                            symbol.string +
-                            "</b>");
+                    stringBuilder.append("<b style=\"color:#2196F3;\">").append(symbol.string).append("</b>");
                     break;
                 case 2:
-                    stringBuffer.append("<span style=\"color:#FF9800;\">" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span style=\"color:#FF9800;\">").append(symbol.string).append("</span>");
                     break;
                 case 3:
-                    stringBuffer.append("<span style=\"color:#9C27B0;\">" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span style=\"color:#9C27B0;\">").append(symbol.string).append("</span>");
                     break;
                 case 4:
-                    stringBuffer.append("<i style=\"color:#9C27B0;\">" +
-                            symbol.string +
-                            "</i>");
+                    stringBuilder.append("<i style=\"color:#9C27B0;\">").append(symbol.string).append("</i>");
                     break;
                 case 5:
-                    stringBuffer.append("<span style=\"color:#F44336;\">" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span style=\"color:#F44336;\">").append(symbol.string).append("</span>");
                     break;
                 case 6:
-                    stringBuffer.append("<span style=\"color:#4CAF50;\">" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span style=\"color:#4CAF50;\">").append(symbol.string).append("</span>");
                     break;
                 case 7:
-                    stringBuffer.append("<span style=\"color:#9E9E9E;\">" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span style=\"color:#9E9E9E;\">").append(symbol.string).append("</span>");
                     break;
                 case 8:
-                    if (symbol.string.equals("\t")){
-                        stringBuffer.append(symbol.string);
-                    }
-                    else{
-                        stringBuffer.append("&nbsp;");
+                    if (symbol.string.equals("\t")) {
+                        stringBuilder.append(symbol.string);
+                    } else {
+                        stringBuilder.append("&nbsp;");
                     }
                     break;
                 case 9:
-                    stringBuffer.append("<br>");
+                    stringBuilder.append("<br>");
                     break;
                 case 10:
-                    stringBuffer.append("<i style=\"color:#4CAF50;\">" +
-                            symbol.string +
-                            "</i>");
+                    stringBuilder.append("<i style=\"color:#4CAF50;\">").append(symbol.string).append("</i>");
                     break;
                 case 100:
-                    stringBuffer.append("<span>" +
-                            symbol.string +
-                            "</span>");
+                    stringBuilder.append("<span>").append(symbol.string).append("</span>");
                     break;
             }
             symbol = cScanner.CScannerFunction();
         }
         fileReader.close();
 
-        FileWriter fileWriter = new FileWriter("/Users/parsahejabi/University/Term 6/CompilerDesign/Homeworks/Scanner/src/main/java/output.html");
-        stringBuffer.append("</p>" +
+        FileWriter fileWriter = new FileWriter("/Users/parsahejabi/University/Term 6/CompilerDesign/Homeworks/ComputerAssignment/Scanner/src/main/java/output.html");
+        stringBuilder.append("</p>" +
                 "</body>" +
                 "</html>");
-        fileWriter.write(stringBuffer.toString());
+        fileWriter.write(stringBuilder.toString());
         fileWriter.flush();
         fileWriter.close();
     }
