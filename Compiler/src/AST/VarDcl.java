@@ -1,7 +1,5 @@
 package AST;
 
-import AST.Types.Type;
-
 import java.util.ArrayList;
 
 public class VarDcl extends AbstractNode {
@@ -16,8 +14,8 @@ public class VarDcl extends AbstractNode {
     }
 
     @Override
-    public void CG() {
-        super.CG();
+    public String CG() {
+        return "var_dcl";
     }
 
     @Override

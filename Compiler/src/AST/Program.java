@@ -3,10 +3,10 @@ package AST;
 import java.util.ArrayList;
 
 public class Program extends AbstractNode {
-    public ArrayList list;
+    public ArrayList<Object> list;
 
     public Program(Object o) {
-        list = new ArrayList();
+        list = new ArrayList<>();
         list.add(o);
     }
 
@@ -23,8 +23,8 @@ public class Program extends AbstractNode {
     }
 
     @Override
-    public void CG() {
-        super.CG();
+    public String CG() {
+        return "program";
     }
 
     @Override

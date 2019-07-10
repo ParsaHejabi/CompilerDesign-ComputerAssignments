@@ -1,6 +1,6 @@
 package AST;
 
-public class VarDclCnt extends AbstractNode{
+public class VarDclCnt extends AbstractNode {
     public Expr expr;
 
     public VarDclCnt(Expr expr) {
@@ -12,8 +12,8 @@ public class VarDclCnt extends AbstractNode{
     }
 
     @Override
-    public void CG() {
-        super.CG();
+    public String CG() {
+        return "var_dcl_cnt";
     }
 
     @Override

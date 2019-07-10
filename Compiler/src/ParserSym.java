@@ -4,7 +4,7 @@
 //----------------------------------------------------
 
 /** CUP generated class containing symbol constants. */
-public class sym {
+public class ParserSym {
   /* terminals */
   public static final int IDENTIFIER = 25;
   public static final int TIMES = 19;

@@ -1,5 +1,7 @@
 package AST.Types;
 
+import AST.Type;
+
 public class LongType extends Type {
     @Override
     public String getType() {

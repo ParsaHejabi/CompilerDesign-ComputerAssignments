@@ -2,7 +2,7 @@ package AST;
 
 import java.util.ArrayList;
 
-public class StructDcl extends AbstractNode{
+public class StructDcl extends AbstractNode {
     public ArrayList<VarDcl> varDclArrayList;
 
     public StructDcl() {
@@ -13,7 +13,7 @@ public class StructDcl extends AbstractNode{
         varDclArrayList.add(varDcl);
     }
 
-    public VarDcl get(int i)  {
+    public VarDcl get(int i) {
         return varDclArrayList.get(i);
     }
 
@@ -22,8 +22,8 @@ public class StructDcl extends AbstractNode{
     }
 
     @Override
-    public void CG() {
-        super.CG();
+    public String CG() {
+        return "struct_dcl";
     }
 
     @Override

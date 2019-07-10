@@ -1,9 +1,9 @@
 package AST;
 
-public class Expr extends AbstractNode{
+public class Expr extends AbstractNode {
     @Override
-    public void CG() {
-        super.CG();
+    public String CG() {
+        return "expr";
     }
 
     @Override

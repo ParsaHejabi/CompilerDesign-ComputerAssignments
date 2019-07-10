@@ -1,11 +1,11 @@
 package AST;
 
 public abstract class AbstractNode {
-    public void CG(){
+    public String CG() {
         throw new UnsupportedOperationException();
     }
 
-    public void CreateSymbolTable(){
+    public void CreateSymbolTable() {
         throw new UnsupportedOperationException();
     }
 }

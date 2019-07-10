@@ -1,6 +1,4 @@
-package AST.Types;
-
-import AST.AbstractNode;
+package AST;
 
 public abstract class Type extends AbstractNode {
     public abstract String getType();
