@@ -41,13 +41,13 @@ class Scanner implements java_cup.runtime.Scanner {
    */
   private static final String ZZ_CMAP_PACKED = 
     "\11\0\1\15\1\17\2\0\1\16\22\0\1\15\1\46\1\66\1\21"+
-    "\1\0\1\56\1\52\1\67\1\61\1\62\1\55\1\13\1\63\1\14"+
-    "\1\10\1\20\1\3\11\2\1\64\1\65\1\47\1\45\1\50\2\0"+
-    "\4\7\1\12\1\7\21\1\1\5\2\1\1\57\1\70\1\60\1\54"+
+    "\1\0\1\56\1\52\1\67\1\57\1\60\1\55\1\13\1\61\1\14"+
+    "\1\10\1\20\1\3\11\2\1\62\1\63\1\47\1\45\1\50\2\0"+
+    "\4\7\1\12\1\7\21\1\1\5\2\1\1\64\1\70\1\65\1\54"+
     "\1\1\1\0\1\31\1\22\1\33\1\40\1\11\1\6\1\23\1\35"+
     "\1\24\1\1\1\32\1\27\1\1\1\25\1\26\1\44\1\1\1\30"+
-    "\1\34\1\36\1\37\1\43\1\42\1\4\1\1\1\41\1\57\1\53"+
-    "\1\60\1\51\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff91\0";
+    "\1\34\1\36\1\37\1\43\1\42\1\4\1\1\1\41\1\0\1\53"+
+    "\1\0\1\51\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff91\0";
 
   /** 
    * Translates characters to character classes
@@ -871,7 +871,7 @@ class Scanner implements java_cup.runtime.Scanner {
             // fall through
           case 99: break;
           case 12: 
-            { return symbol(yytext(), ParserSym.COMPLEMENT_BITWISE);
+            { return symbol(yytext(), ParserSym.TILDE);
             } 
             // fall through
           case 100: break;
@@ -901,37 +901,37 @@ class Scanner implements java_cup.runtime.Scanner {
             // fall through
           case 105: break;
           case 18: 
-            { return symbol(yytext(), ParserSym.LBRACE);
+            { return symbol(yytext(), ParserSym.LPAREN);
             } 
             // fall through
           case 106: break;
           case 19: 
-            { return symbol(yytext(), ParserSym.RBRACE);
+            { return symbol(yytext(), ParserSym.RPAREN);
             } 
             // fall through
           case 107: break;
           case 20: 
-            { return symbol(yytext(), ParserSym.LPAREN);
+            { return symbol(yytext(), ParserSym.COMMA);
             } 
             // fall through
           case 108: break;
           case 21: 
-            { return symbol(yytext(), ParserSym.RPAREN);
+            { return symbol(yytext(), ParserSym.COLON);
             } 
             // fall through
           case 109: break;
           case 22: 
-            { return symbol(yytext(), ParserSym.COMMA);
+            { return symbol(yytext(), ParserSym.SEMICOLON);
             } 
             // fall through
           case 110: break;
           case 23: 
-            { return symbol(yytext(), ParserSym.COLON);
+            { return symbol(yytext(), ParserSym.LBRACKET);
             } 
             // fall through
           case 111: break;
           case 24: 
-            { return symbol(yytext(), ParserSym.SEMICOLON);
+            { return symbol(yytext(), ParserSym.RBRACKET);
             } 
             // fall through
           case 112: break;
@@ -1121,7 +1121,7 @@ class Scanner implements java_cup.runtime.Scanner {
             // fall through
           case 149: break;
           case 62: 
-            { return symbol(yytext(), ParserSym.NOT_COND);
+            { return symbol(yytext(), ParserSym.NOT_EXPR);
             } 
             // fall through
           case 150: break;

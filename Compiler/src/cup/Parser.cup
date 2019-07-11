@@ -1,16 +1,10 @@
 /* Package and import specifications */
-import java_cup.runtime.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /* Parser class name */
 class Parser;
 
 /* Terminals (tokens returned by the scanner). */
-
-// const_val nonterminal
+// const_val terminals
 terminal    Integer         INT_CONST;
 terminal    Double          REAL_CONST;
 terminal    Character       CHAR_CONST;
@@ -18,57 +12,61 @@ terminal    Boolean         BOOL_CONST;
 terminal    String          STRING_CONST;
 terminal    Long            LONG_CONST;
 
-// conditional nonterminal
+// conditional terminals
 terminal                    EQUAL_TO, NOT_EQUAL_TO, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO, LESS_THAN, GREATER_THAN;
-terminal                    AND_COND, OR_COND, NOT_COND;
+terminal                    AND_COND, OR_COND;
 
-// arithmatic nonterminal
+// arithmatic terminals
 terminal                    PLUS, MINUS, TIMES, DIVIDE, MOD, AND_BITWISE, OR_BITWISE, XOR_BITWISE;
 
-// variable nonterminal
+// variable terminals
 terminal                    IDENTIFIER;
-terminal                    LBRACE, RBRACE;
+terminal                    LBRACKET, RBRACKET;
 terminal                    DOT;
-terminal                    COMPLEMENT_BITWISE;
+/* TODO CHECK IF THESE TERMINALS SHOULD BE TWO OR FOUR */
 terminal                    PREFIX_PLUS_PLUS, PREFIX_MINUS_MINUS;
 terminal                    POSTFIX_PLUS_PLUS, POSTFIX_MINUS_MINUS;
 
-// expr nonterminal
+// expr terminals
 terminal                    LPAREN, RPAREN;
 terminal                    MINUS_UNARY;
+/* This not is bitwise negation */
+terminal                    TILDE;
+/* This not output is boolean */
+terminal                    NOT_EXPR;
 terminal                    SIZE_OF;
 
-// loop_stmt nonterminal
+// loop_stmt terminals
 terminal                    FOR, SEMICOLON;
 terminal                    REPEAT, UNTIL;
 terminal                    FOREACH, IN;
 
-// cond_stmt nonterminal
+// cond_stmt terminals
 terminal                    IF, ELSE;
 terminal                    SWITCH, OF, COLON, BEGIN, CASE, DEFAULT, END;
 
-// parameters nonterminal
+// parameters terminals
 terminal                    COMMA;
 
-// assignment nonterminal
+// assignment terminals
 terminal                    EQUAL, PLUS_EQUAL, MINUS_EQUAL, TIMES_EQUAL, DIVIDE_EQUAL;
 
-// statement nonterminal
+// statement terminals
 terminal                    RETURN, BREAK, CONTINUE;
 
-// var_dcl nonterminal
+// var_dcl terminals
 terminal                    CONST;
 
-// struct_dec nonterminal
+// struct_dec terminals
 terminal                    RECORD;
 
-// type nonterminal
+// type terminals
 terminal                    INT, BOOL, FLOAT, LONG, CHAR, DOUBLE, STRING, VOID, AUTO;
 
-// extern_dcl nonterminal
+// extern_dcl terminals
 terminal                    EXTERN;
 
-// func_dcl nonterminal
+// func_dcl terminals
 terminal                    FUNCTION;
 
 /* Non terminals */
@@ -77,8 +75,8 @@ nonterminal                 program;
 nonterminal                 var_dcl, func_extern, struct_dec;
 nonterminal                 type;
 nonterminal                 var_dcl_cnt;
-nonterminal                 variable, expr;
-nonterminal                 binary_op, method_call, const_val;
+nonterminal                 expr;
+nonterminal                 binary_op, method_call, variable, const_val;
 nonterminal                 arithmatic, conditional;
 nonterminal                 parameters;
 nonterminal                 func_dcl, extern_dcl;
@@ -87,9 +85,7 @@ nonterminal                 statement;
 nonterminal                 assignment, cond_stmt, loop_stmt;
 
 // Plus nonterminals
-nonterminal                 program_plus;
 nonterminal                 brack_expr_plus;
-nonterminal                 l_r_brace_plus;
 nonterminal                 var_dcl_plus;
 
 // Star nonterminals
@@ -115,168 +111,248 @@ precedence left             EQUAL_TO, NOT_EQUAL_TO;
 precedence left             GREATER_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN, LESS_THAN_EQUAL_TO;
 precedence left             PLUS, MINUS;
 precedence left             TIMES, DIVIDE, MOD;
-precedence right            PREFIX_PLUS_PLUS, PREFIX_MINUS_MINUS, SIZE_OF, NOT_COND, COMPLEMENT_BITWISE, MINUS_UNARY;
-precedence nonassoc         LBRACE, RBRACE, LPAREN, RPAREN;
+precedence right            PREFIX_PLUS_PLUS, PREFIX_MINUS_MINUS, SIZE_OF, NOT_EXPR, TILDE, MINUS_UNARY;
+precedence nonassoc         LBRACKET, RBRACKET, LPAREN, RPAREN;
 precedence left             POSTFIX_PLUS_PLUS, POSTFIX_MINUS_MINUS, DOT;
 
 /* The grammar */
 start with program;
-program                     ::=     var_dcl program_plus |
-                                    func_extern program_plus |
-                                    struct_dec program_plus |
+program                     ::=     var_dcl program
+                                    |
+                                    func_extern program
+                                    |
+                                    struct_dec program
+                                    |
                                     ;
 
-program_plus                ::=     var_dcl program_plus |
-                                    func_extern program_plus |
-                                    struct_dec program_plus |
-                                    ;
-
-var_dcl                     ::=     CONST type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON|
-                                    type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
-                                    ;
-
-comma_var_dcl_cnt_star      ::=     COMMA var_dcl_cnt comma_var_dcl_cnt_star |;
-
-type                        ::=     INT |
-                                    BOOL |
-                                    FLOAT |
-                                    LONG |
-                                    CHAR |
-                                    DOUBLE |
-                                    IDENTIFIER |
-                                    STRING |
-                                    VOID |
-                                    AUTO
-                                    ;
-
-var_dcl_cnt                 ::=     variable |
-                                    variable EQUAL expr
-                                    ;
-
-variable                    ::=     IDENTIFIER |
-                                    IDENTIFIER LBRACE expr RBRACE brack_expr_plus |
-                                    variable DOT IDENTIFIER |
-                                    PREFIX_MINUS_MINUS variable |
-                                    PREFIX_PLUS_PLUS variable |
-                                    variable POSTFIX_MINUS_MINUS |
-                                    variable POSTFIX_PLUS_PLUS
-                                    ;
-
-brack_expr_plus             ::=     LBRACE expr RBRACE brack_expr_plus |;
-
-expr                        ::=     expr binary_op expr |
-                                    LPAREN expr RPAREN |
-                                    method_call |
-                                    variable |
-                                    const_val |
-                                    MINUS_UNARY expr |
-                                    COMPLEMENT_BITWISE expr |
-                                    SIZE_OF LPAREN expr RPAREN
-                                    ;
-
-binary_op                   ::=     arithmatic |
-                                    conditional
-                                    ;
-
-arithmatic                  ::=     PLUS |
-                                    MINUS |
-                                    TIMES |
-                                    DIVIDE |
-                                    MOD |
-                                    AND_BITWISE |
-                                    OR_BITWISE |
-                                    XOR_BITWISE
-                                    ;
-
-conditional                 ::=     EQUAL_TO |
-                                    NOT_EQUAL_TO |
-                                    GREATER_THAN_EQUAL_TO |
-                                    LESS_THAN_EQUAL_TO |
-                                    LESS_THAN |
-                                    GREATER_THAN |
-                                    AND_COND |
-                                    OR_COND |
-                                    NOT_COND
-                                    ;
-
-const_val                   ::=     INT_CONST |
-                                    REAL_CONST |
-                                    CHAR_CONST |
-                                    BOOL_CONST |
-                                    STRING_CONST |
-                                    LONG_CONST
-                                    ;
-
-func_extern                 ::=     func_dcl |
+func_extern                 ::=     func_dcl
+                                    |
                                     extern_dcl
                                     ;
 
-func_dcl                    ::=     FUNCTION type IDENTIFIER LPAREN arguments RPAREN SEMICOLON |
-                                    FUNCTION type IDENTIFIER LPAREN RPAREN SEMICOLON |
-                                    FUNCTION type IDENTIFIER LPAREN arguments RPAREN block |
+func_dcl                    ::=     FUNCTION type IDENTIFIER LPAREN arguments RPAREN SEMICOLON
+                                    |
+                                    FUNCTION type IDENTIFIER LPAREN RPAREN SEMICOLON
+                                    |
+                                    FUNCTION type IDENTIFIER LPAREN arguments RPAREN block
+                                    |
                                     FUNCTION type IDENTIFIER LPAREN RPAREN block
-                                    ;
-
-arguments                   ::=     type IDENTIFIER l_r_brace_optional COMMA arguments |
-                                    type IDENTIFIER l_r_brace_optional
-                                    ;
-
-l_r_brace_optional          ::=     LBRACE RBRACE l_r_brace_plus |;
-
-l_r_brace_plus              ::=     LBRACE RBRACE l_r_brace_plus |;
-
-block                       ::=     BEGIN var_dcl_or_statement_star END;
-
-var_dcl_or_statement_star   ::=     var_dcl var_dcl_or_statement_star |
-                                    statement var_dcl_or_statement_star |
-                                    ;
-
-statement                   ::=     assignment SEMICOLON |
-                                    method_call SEMICOLON |
-                                    cond_stmt |
-                                    loop_stmt |
-                                    RETURN expr SEMICOLON |
-                                    RETURN SEMICOLON |
-                                    BREAK SEMICOLON |
-                                    CONTINUE SEMICOLON
-                                    ;
-
-assignment                  ::=     variable EQUAL expr |
-                                    variable PLUS_EQUAL expr |
-                                    variable MINUS_EQUAL expr |
-                                    variable TIMES_EQUAL expr |
-                                    variable DIVIDE_EQUAL expr
-                                    ;
-
-method_call                 ::=     IDENTIFIER LPAREN parameters RPAREN |
-                                    IDENTIFIER LPAREN RPAREN
-                                    ;
-
-parameters                  ::=     expr |
-                                    expr COMMA parameters
-                                    ;
-
-cond_stmt                   ::=     IF LPAREN expr RPAREN block else_block_optional |
-                                    SWITCH LPAREN IDENTIFIER RPAREN OF COLON BEGIN case_block_star DEFAULT COLON block END
-                                    ;
-
-else_block_optional         ::=     ELSE block |;
-
-case_block_star             ::=     CASE INT_CONST COLON block case_block_star |;
-
-loop_stmt                   ::=     FOR LPAREN assignment_optional SEMICOLON expr SEMICOLON assignment_or_expr_optional RPAREN block |
-                                    REPEAT block UNTIL LPAREN expr RPAREN SEMICOLON |
-                                    FOREACH LPAREN IDENTIFIER IN IDENTIFIER RPAREN block
-                                    ;
-
-assignment_optional         ::=     assignment |;
-
-assignment_or_expr_optional ::=     assignment |
-                                    expr |
                                     ;
 
 extern_dcl                  ::=     EXTERN type IDENTIFIER SEMICOLON;
 
-struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl var_dcl_plus END RECORD SEMICOLON;
+arguments                   ::=     type IDENTIFIER l_r_brace_optional COMMA arguments
+                                    |
+                                    type IDENTIFIER l_r_brace_optional
+                                    ;
 
-var_dcl_plus                ::=     var_dcl var_dcl_plus |;
+l_r_brace_optional          ::=     LBRACKET RBRACKET l_r_brace_optional
+                                    |
+                                    ;
+
+type                        ::=     INT
+                                    |
+                                    BOOL
+                                    |
+                                    FLOAT
+                                    |
+                                    LONG
+                                    |
+                                    CHAR
+                                    |
+                                    DOUBLE
+                                    |
+                                    IDENTIFIER
+                                    |
+                                    STRING
+                                    |
+                                    VOID
+                                    |
+                                    AUTO
+                                    ;
+
+struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl var_dcl_plus END SEMICOLON;
+
+var_dcl                     ::=     CONST type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
+                                    |
+                                    type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
+                                    ;
+
+var_dcl_plus                ::=     var_dcl var_dcl_plus
+                                    |
+                                    ;
+
+comma_var_dcl_cnt_star      ::=     COMMA var_dcl_cnt comma_var_dcl_cnt_star
+                                    |
+                                    ;
+
+var_dcl_cnt                 ::=     IDENTIFIER
+                                    |
+                                    IDENTIFIER EQUAL expr
+                                    ;
+
+block                       ::=     BEGIN var_dcl_or_statement_star END;
+
+var_dcl_or_statement_star   ::=     var_dcl var_dcl_or_statement_star
+                                    |
+                                    statement var_dcl_or_statement_star
+                                    |
+                                    ;
+
+statement                   ::=     assignment SEMICOLON
+                                    |
+                                    method_call SEMICOLON
+                                    |
+                                    cond_stmt
+                                    |
+                                    loop_stmt
+                                    |
+                                    RETURN expr SEMICOLON
+                                    |
+                                    RETURN SEMICOLON
+                                    |
+                                    BREAK SEMICOLON
+                                    |
+                                    CONTINUE SEMICOLON
+                                    ;
+
+assignment                  ::=     variable EQUAL expr
+                                    |
+                                    variable PLUS_EQUAL expr
+                                    |
+                                    variable MINUS_EQUAL expr
+                                    |
+                                    variable TIMES_EQUAL expr
+                                    |
+                                    variable DIVIDE_EQUAL expr
+                                    ;
+
+method_call                 ::=     IDENTIFIER LPAREN parameters RPAREN
+                                    |
+                                    IDENTIFIER LPAREN RPAREN
+                                    ;
+
+parameters                  ::=     expr
+                                    |
+                                    expr COMMA parameters
+                                    ;
+
+cond_stmt                   ::=     IF LPAREN expr RPAREN block else_block_optional
+                                    |
+                                    SWITCH LPAREN IDENTIFIER RPAREN OF COLON BEGIN case_block_star DEFAULT COLON block END
+                                    ;
+
+else_block_optional         ::=     ELSE block
+                                    |
+                                    ;
+
+case_block_star             ::=     CASE INT_CONST COLON block case_block_star
+                                    |
+                                    ;
+
+loop_stmt                   ::=     FOR LPAREN assignment_optional SEMICOLON expr SEMICOLON assignment_or_expr_optional RPAREN block
+                                    |
+                                    REPEAT block UNTIL LPAREN expr RPAREN SEMICOLON
+                                    |
+                                    FOREACH LPAREN IDENTIFIER IN IDENTIFIER RPAREN block
+                                    ;
+
+assignment_optional         ::=     assignment
+                                    |
+                                    ;
+
+assignment_or_expr_optional ::=     assignment
+                                    |
+                                    expr
+                                    |
+                                    ;
+
+expr                        ::=     expr binary_op expr
+                                    |
+                                    LPAREN expr RPAREN
+                                    |
+                                    method_call
+                                    |
+                                    variable
+                                    |
+                                    const_val
+                                    |
+                                    MINUS_UNARY expr
+                                    |
+                                    TILDE expr
+                                    |
+                                    NOT_EXPR expr
+                                    |
+                                    SIZE_OF LPAREN type RPAREN
+                                    ;
+
+variable                    ::=     IDENTIFIER
+                                    |
+                                    IDENTIFIER LBRACKET expr RBRACKET brack_expr_plus
+                                    |
+                                    variable DOT IDENTIFIER
+                                    |
+                                    PREFIX_MINUS_MINUS variable
+                                    |
+                                    PREFIX_PLUS_PLUS variable
+                                    |
+                                    variable POSTFIX_MINUS_MINUS
+                                    |
+                                    variable POSTFIX_PLUS_PLUS
+                                    ;
+
+brack_expr_plus             ::=     LBRACKET expr RBRACKET brack_expr_plus
+                                    |
+                                    ;
+
+binary_op                   ::=     arithmatic
+                                    |
+                                    conditional
+                                    ;
+
+arithmatic                  ::=     PLUS
+                                    |
+                                    MINUS
+                                    |
+                                    TIMES
+                                    |
+                                    DIVIDE
+                                    |
+                                    MOD
+                                    |
+                                    AND_BITWISE
+                                    |
+                                    OR_BITWISE
+                                    |
+                                    XOR_BITWISE
+                                    ;
+
+conditional                 ::=     EQUAL_TO
+                                    |
+                                    NOT_EQUAL_TO
+                                    |
+                                    GREATER_THAN_EQUAL_TO
+                                    |
+                                    LESS_THAN_EQUAL_TO
+                                    |
+                                    LESS_THAN
+                                    |
+                                    GREATER_THAN
+                                    |
+                                    AND_COND
+                                    |
+                                    OR_COND
+                                    ;
+
+const_val                   ::=     INT_CONST
+                                    |
+                                    REAL_CONST
+                                    |
+                                    CHAR_CONST
+                                    |
+                                    BOOL_CONST
+                                    |
+                                    STRING_CONST
+                                    |
+                                    LONG_CONST
+                                    ;

@@ -116,8 +116,8 @@ EndOfLineComment     = "##" {InputCharacter}*
 <YYINITIAL> ">"                     {return symbol(yytext(), ParserSym.GREATER_THAN);}
 <YYINITIAL> ">="                    {return symbol(yytext(), ParserSym.GREATER_THAN_EQUAL_TO);}
 <YYINITIAL> "="                     {return symbol(yytext(), ParserSym.EQUAL);}
-<YYINITIAL> "not"                   {return symbol(yytext(), ParserSym.NOT_COND);}
-<YYINITIAL> "~"                     {return symbol(yytext(), ParserSym.COMPLEMENT_BITWISE);}
+<YYINITIAL> "not"                   {return symbol(yytext(), ParserSym.NOT_EXPR);}
+<YYINITIAL> "~"                     {return symbol(yytext(), ParserSym.TILDE);}
 <YYINITIAL> "&"                     {return symbol(yytext(), ParserSym.AND_BITWISE);}
 <YYINITIAL> "and"                   {return symbol(yytext(), ParserSym.AND_COND);}
 <YYINITIAL> "or"                    {return symbol(yytext(), ParserSym.OR_COND);}
@@ -132,16 +132,14 @@ EndOfLineComment     = "##" {InputCharacter}*
 <YYINITIAL> "/="                    {return symbol(yytext(), ParserSym.DIVIDE_EQUAL);}
 <YYINITIAL> "/"                     {return symbol(yytext(), ParserSym.DIVIDE);}
 <YYINITIAL> "%"                     {return symbol(yytext(), ParserSym.MOD);}
-<YYINITIAL> "{"                     {return symbol(yytext(), ParserSym.LBRACE);}
-<YYINITIAL> "}"                     {return symbol(yytext(), ParserSym.RBRACE);}
 <YYINITIAL> "("                     {return symbol(yytext(), ParserSym.LPAREN);}
 <YYINITIAL> ")"                     {return symbol(yytext(), ParserSym.RPAREN);}
 <YYINITIAL> "."                     {return symbol(yytext(), ParserSym.DOT);}
 <YYINITIAL> ","                     {return symbol(yytext(), ParserSym.COMMA);}
 <YYINITIAL> ":"                     {return symbol(yytext(), ParserSym.COLON);}
 <YYINITIAL> ";"                     {return symbol(yytext(), ParserSym.SEMICOLON);}
-<YYINITIAL> "["                     {return symbol(yytext(), ParserSym.LBRACE);}
-<YYINITIAL> "]"                     {return symbol(yytext(), ParserSym.RBRACE);}
+<YYINITIAL> "["                     {return symbol(yytext(), ParserSym.LBRACKET);}
+<YYINITIAL> "]"                     {return symbol(yytext(), ParserSym.RBRACKET);}
 <YYINITIAL> "++"                    {return symbol(yytext(), ParserSym.PREFIX_PLUS_PLUS);}
 <YYINITIAL> "--"                    {return symbol(yytext(), ParserSym.PREFIX_MINUS_MINUS);}
 
