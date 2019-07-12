@@ -1,5 +1,7 @@
 /* Package and import specifications */
 import ASTNodes.*;
+import ASTNodes.Enums.*;
+import ASTNodes.Interfaces.*;
 
 /* Parser class name */
 class Parser;
@@ -21,7 +23,7 @@ terminal                    AND_COND, OR_COND;
 terminal                    PLUS, MINUS, TIMES, DIVIDE, MOD, AND_BITWISE, OR_BITWISE, XOR_BITWISE;
 
 // variable terminals
-terminal                    IDENTIFIER;
+terminal    String          IDENTIFIER;
 terminal                    LBRACKET, RBRACKET;
 terminal                    DOT;
 /* TODO CHECK IF THESE TERMINALS SHOULD BE TWO OR FOUR */
@@ -74,7 +76,7 @@ terminal                    FUNCTION;
 // Main nonterminals
 nonterminal     Program     program;
 nonterminal                 var_dcl, func_extern, struct_dec;
-nonterminal                 type;
+nonterminal     Type        type;
 nonterminal                 var_dcl_cnt;
 nonterminal                 expr;
 nonterminal                 binary_op, method_call, variable, const_val;
@@ -82,7 +84,8 @@ nonterminal                 arithmatic, conditional;
 nonterminal                 parameters;
 nonterminal     FuncDcl     func_dcl;
 nonterminal     ExternDcl   extern_dcl;
-nonterminal                 arguments, block;
+nonterminal     Argument    arguments;
+nonterminal                 block;
 nonterminal                 statement;
 nonterminal                 assignment, cond_stmt, loop_stmt;
 
@@ -164,22 +167,22 @@ func_extern                 ::=     func_dcl:fd
 
 func_dcl                    ::=     FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN SEMICOLON
                                     {:
-                                        RESULT = new FuncDcl(t, i, a, FuncDclType.DECLARE);
+                                        RESULT = new FuncDcl(t, i, a, FuncDclEnum.DECLARE);
                                     :}
                                     |
                                     FUNCTION type:t IDENTIFIER:i LPAREN RPAREN SEMICOLON
                                     {:
-                                        RESULT = new FuncDcl(t, i, null, FuncDclType.DECLARE);
+                                        RESULT = new FuncDcl(t, i, null, FuncDclEnum.DECLARE);
                                     :}
                                     |
                                     FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN block
                                     {:
-                                        RESULT = new FuncDcl(t, i, a, FuncDclType.DEFINE);
+                                        RESULT = new FuncDcl(t, i, a, FuncDclEnum.DEFINE);
                                     :}
                                     |
                                     FUNCTION type:t IDENTIFIER:i LPAREN RPAREN block:b
                                     {:
-                                        RESULT = new FuncDcl(t, i, null, FuncDclType.DEFINE);
+                                        RESULT = new FuncDcl(t, i, null, FuncDclEnum.DEFINE);
                                     :}
                                     ;
 
@@ -192,7 +195,7 @@ extern_dcl                  ::=     EXTERN type:t IDENTIFIER:i SEMICOLON
 arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA arguments:a
                                     {:
                                         if (a == null) {
-                                            a = new Argrument();
+                                            a = new Argument();
                                         }
 
                                         a.addElement(new Argument(t, i));
@@ -201,8 +204,9 @@ arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA
                                     |
                                     type:t IDENTIFIER:i l_r_brace_optional
                                     {:
-                                        RESULT = new Argument();
-                                        RESULT.addElement(new Argument(t, i));
+                                        Argument a = new Argument();
+                                        a.addElement(new Argument(t, i));
+                                        RESULT = a;
                                     :}
                                     ;
 
@@ -212,52 +216,52 @@ l_r_brace_optional          ::=     LBRACKET RBRACKET l_r_brace_optional
 
 type                        ::=     INT
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.INT);
+                                        RESULT = new Type(TypeEnum.INT);
                                     :}
                                     |
                                     BOOL
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.BOOL);
+                                        RESULT = new Type(TypeEnum.BOOL);
                                     :}
                                     |
                                     FLOAT
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.FLOAT);
+                                        RESULT = new Type(TypeEnum.FLOAT);
                                     :}
                                     |
                                     LONG
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.LONG);
+                                        RESULT = new Type(TypeEnum.LONG);
                                     :}
                                     |
                                     CHAR
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.CHAR);
+                                        RESULT = new Type(TypeEnum.CHAR);
                                     :}
                                     |
                                     DOUBLE
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.DOUBLE);
+                                        RESULT = new Type(TypeEnum.DOUBLE);
                                     :}
                                     |
                                     IDENTIFIER
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.IDENTIFIER);
+                                        RESULT = new Type(TypeEnum.IDENTIFIER);
                                     :}
                                     |
                                     STRING
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.STRING);
+                                        RESULT = new Type(TypeEnum.STRING);
                                     :}
                                     |
                                     VOID
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.VOID);
+                                        RESULT = new Type(TypeEnum.VOID);
                                     :}
                                     |
                                     AUTO
                                     {:
-                                        RESULT = new Type(PrimitiveTypes.AUTO);
+                                        RESULT = new Type(TypeEnum.AUTO);
                                     :}
                                     ;
 

@@ -1,11 +1,11 @@
 package ASTNodes;
 
-import ASTNodes.Enums.PrimitiveTypes;
+import ASTNodes.Enums.TypeEnum;
 
 public class Type {
-    public PrimitiveTypes type;
+    public TypeEnum type;
 
-    public Type(PrimitiveTypes type) {
+    public Type(TypeEnum type) {
         this.type = type;
     }
 }

@@ -1,6 +1,6 @@
 package ASTNodes.Enums;
 
-public enum FuncDclType {
+public enum FuncDclEnum {
     DECLARE,
     DEFINE
 }

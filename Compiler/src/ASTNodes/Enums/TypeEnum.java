@@ -1,6 +1,6 @@
 package ASTNodes.Enums;
 
-public enum PrimitiveTypes{
+public enum TypeEnum {
     INT,
     BOOL,
     FLOAT,
