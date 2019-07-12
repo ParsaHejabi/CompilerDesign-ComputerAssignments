@@ -3,6 +3,8 @@ import ASTNodes.*;
 import ASTNodes.Enums.*;
 import ASTNodes.Interfaces.*;
 
+import java.util.ArrayList;
+
 /* Parser class name */
 class Parser;
 
@@ -95,9 +97,9 @@ nonterminal                 brack_expr_plus;
 nonterminal     VarDcls     var_dcl_plus;
 
 // Star nonterminals
-nonterminal VarDclCnts      comma_var_dcl_cnt_star;
-nonterminal                 var_dcl_or_statement_star;
-nonterminal                 case_block_star;
+nonterminal VarDclCnts          comma_var_dcl_cnt_star;
+nonterminal ArrayList<Object>   var_dcl_or_statement_star;
+nonterminal                     case_block_star;
 
 // Optional nonterminals
 nonterminal                 l_r_brace_optional;
@@ -357,7 +359,7 @@ var_dcl_or_statement_star   ::=     var_dcl:vd var_dcl_or_statement_star:vdoss
                                         if (vdoss == null) {
                                             vdoss = new ArrayList<Object>();
                                         }
-                                        vdoss.add(vd);
+                                        vdoss.add(s);
                                         RESULT = vdoss;
                                     :}
                                     |
@@ -531,12 +533,12 @@ const_val                   ::=     INT_CONST:i
                                         RESULT = new ConstValue(TypeEnum.BOOL, i);
                                     :}
                                     |
-                                    STRING_CONST
+                                    STRING_CONST:i
                                     {:
                                         RESULT = new ConstValue(TypeEnum.STRING, i);
                                     :}
                                     |
-                                    LONG_CONST
+                                    LONG_CONST:i
                                     {:
                                         RESULT = new ConstValue(TypeEnum.LONG, i);
                                     :}

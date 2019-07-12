@@ -6,6 +6,8 @@
 import ASTNodes.*;
 import ASTNodes.Enums.*;
 import ASTNodes.Interfaces.*;
+
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -1231,7 +1233,7 @@ class CUP$Parser$actions {
               Object RESULT =null;
               int vdossleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
               int vdossright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-              Object vdoss = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
+              ArrayList<Object> vdoss = (ArrayList<Object>) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
 
               Block b = new Block();
               b.varDcls_statements = vdoss;
@@ -1244,13 +1246,13 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 36: // var_dcl_or_statement_star ::= var_dcl var_dcl_or_statement_star 
             {
-              Object RESULT =null;
+              ArrayList<Object> RESULT = null;
               int vdleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
               int vdright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
               VarDcl vd = (VarDcl) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
               int vdossleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
               int vdossright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-              Object vdoss = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+              ArrayList<Object> vdoss = (ArrayList<Object>) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
               if (vdoss == null) {
                 vdoss = new ArrayList<Object>();
@@ -1265,18 +1267,18 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 37: // var_dcl_or_statement_star ::= statement var_dcl_or_statement_star 
             {
-              Object RESULT =null;
+              ArrayList<Object> RESULT = null;
               int sleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
               int sright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
               Object s = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
               int vdossleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
               int vdossright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-              Object vdoss = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+              ArrayList<Object> vdoss = (ArrayList<Object>) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
               if (vdoss == null) {
                 vdoss = new ArrayList<Object>();
               }
-              vdoss.add(vd);
+              vdoss.add(s);
               RESULT = vdoss;
                                     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("var_dcl_or_statement_star",25, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -1286,7 +1288,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 38: // var_dcl_or_statement_star ::= 
             {
-              Object RESULT =null;
+              ArrayList<Object> RESULT = null;
 
               RESULT = new ArrayList<Object>();
                                     
@@ -1957,6 +1959,9 @@ class CUP$Parser$actions {
           case 110: // const_val ::= STRING_CONST 
             {
               Object RESULT =null;
+              int ileft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
+              int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
+              String i = (String) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
               RESULT = new ConstValue(TypeEnum.STRING, i);
                                     
@@ -1968,6 +1973,9 @@ class CUP$Parser$actions {
           case 111: // const_val ::= LONG_CONST 
             {
               Object RESULT =null;
+              int ileft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
+              int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
+              Long i = (Long) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
               RESULT = new ConstValue(TypeEnum.LONG, i);
                                     
