@@ -9,7 +9,7 @@ public class VarDcls {
         varDclList = new ArrayList<>();
     }
 
-    public void addElement(VarDcl vd){
+    public void addElement(VarDcl vd) {
         varDclList.add(vd);
     }
 }

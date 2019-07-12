@@ -8,7 +8,8 @@ public class VarDclCnts {
     public VarDclCnts() {
         varDclCnts = new ArrayList<>();
     }
-    public void addElement(VarDclCnt vdc){
+
+    public void addElement(VarDclCnt vdc) {
         varDclCnts.add(vdc);
     }
 }

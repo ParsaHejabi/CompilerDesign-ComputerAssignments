@@ -17,7 +17,6 @@ public class Argument implements CodeGeneratable {
         this.identifier = identifier;
     }
 
-
     @Override
     public String generateCode() {
         return null;

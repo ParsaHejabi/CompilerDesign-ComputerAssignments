@@ -578,7 +578,7 @@ class Scanner implements java_cup.runtime.Scanner {
 
 
   /**
-   * Returns the text matched by the current regular expression.
+   * Returns the text matched by the current regular expr.
    */
   public final String yytext() {
     return new String( zzBuffer, zzStartRead, zzMarkedPos-zzStartRead );
@@ -665,7 +665,7 @@ class Scanner implements java_cup.runtime.Scanner {
 
 
   /**
-   * Resumes scanning until the next regular expression is matched,
+   * Resumes scanning until the next regular expr is matched,
    * the end of input is encountered or an I/O-Error occurs.
    *
    * @return      the next token

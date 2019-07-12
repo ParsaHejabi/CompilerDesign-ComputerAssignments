@@ -79,7 +79,7 @@ nonterminal     VarDcl      var_dcl;
 nonterminal                 func_extern, struct_dec;
 nonterminal     Type        type;
 nonterminal     VarDclCnt   var_dcl_cnt;
-nonterminal                 expr;
+nonterminal     Expr        expr;
 nonterminal                 binary_op, method_call, variable, const_val;
 nonterminal                 arithmatic, conditional;
 nonterminal                 parameters;

@@ -2,13 +2,11 @@ package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
 
-import java.util.ArrayList;
-
 public class StructDcl implements CodeGeneratable {
     public String identifier;
     public VarDcls varDcls;
 
-    public StructDcl(String identifier,VarDcls varDcls) {
+    public StructDcl(String identifier, VarDcls varDcls) {
         this.identifier = identifier;
         this.varDcls = varDcls;
     }

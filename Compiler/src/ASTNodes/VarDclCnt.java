@@ -2,10 +2,10 @@ package ASTNodes;
 
 public class VarDclCnt {
     public String identifier;
-    public Expression expression;
+    public Expr expr;
 
-    public VarDclCnt(String identifier, Expression expression) {
+    public VarDclCnt(String identifier, Expr expr) {
         this.identifier = identifier;
-        this.expression = expression;
+        this.expr = expr;
     }
 }

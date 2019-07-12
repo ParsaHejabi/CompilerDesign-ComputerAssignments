@@ -8,7 +8,8 @@ public class Arguments {
     public Arguments() {
         args = new ArrayList<>();
     }
-    public void addElement(Argument arg){
+
+    public void addElement(Argument arg) {
         args.add(arg);
     }
 }
