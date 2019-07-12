@@ -212,7 +212,11 @@ arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA
                                     ;
 
 l_r_brace_optional          ::=     LBRACKET RBRACKET l_r_brace_optional
+                                    {:
+                                    :}
                                     |
+                                    {:
+                                    :}
                                     ;
 
 type                        ::=     INT
@@ -331,12 +335,35 @@ var_dcl_cnt                 ::=     IDENTIFIER:i
                                     :}
                                     ;
 
-block                       ::=     BEGIN var_dcl_or_statement_star END;
+block                       ::=     BEGIN var_dcl_or_statement_star:vdoss END
+                                    {:
+                                        Block b = new Block();
+                                        b.varDcls_statements = vdoss;
+                                        RESULT = b;
+                                    :}
+                                    ;
 
-var_dcl_or_statement_star   ::=     var_dcl var_dcl_or_statement_star
+var_dcl_or_statement_star   ::=     var_dcl:vd var_dcl_or_statement_star:vdoss
+                                    {:
+                                        if (vdoss == null) {
+                                            vdoss = new ArrayList<Object>();
+                                        }
+                                        vdoss.add(vd);
+                                        RESULT = vdoss;
+                                    :}
                                     |
-                                    statement var_dcl_or_statement_star
+                                    statement:s var_dcl_or_statement_star:vdoss
+                                    {:
+                                        if (vdoss == null) {
+                                            vdoss = new ArrayList<Object>();
+                                        }
+                                        vdoss.add(vd);
+                                        RESULT = vdoss;
+                                    :}
                                     |
+                                    {:
+                                        RESULT = new ArrayList<Object>();
+                                    :}
                                     ;
 
 statement                   ::=     assignment SEMICOLON
@@ -484,15 +511,33 @@ conditional                 ::=     EQUAL_TO
                                     OR_COND
                                     ;
 
-const_val                   ::=     INT_CONST
+const_val                   ::=     INT_CONST:i
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.INT, i);
+                                    :}
                                     |
-                                    REAL_CONST
+                                    REAL_CONST:i
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.DOUBLE, i);
+                                    :}
                                     |
-                                    CHAR_CONST
+                                    CHAR_CONST:i
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.CHAR, i);
+                                    :}
                                     |
-                                    BOOL_CONST
+                                    BOOL_CONST:i
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.BOOL, i);
+                                    :}
                                     |
                                     STRING_CONST
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.STRING, i);
+                                    :}
                                     |
                                     LONG_CONST
+                                    {:
+                                        RESULT = new ConstValue(TypeEnum.LONG, i);
+                                    :}
                                     ;
