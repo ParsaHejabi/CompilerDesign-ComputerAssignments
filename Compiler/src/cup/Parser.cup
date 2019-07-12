@@ -1,4 +1,5 @@
 /* Package and import specifications */
+import ASTNodes.*;
 
 /* Parser class name */
 class Parser;
@@ -71,7 +72,7 @@ terminal                    FUNCTION;
 
 /* Non terminals */
 // Main nonterminals
-nonterminal                 program;
+nonterminal     Program     program;
 nonterminal                 var_dcl, func_extern, struct_dec;
 nonterminal                 type;
 nonterminal                 var_dcl_cnt;
@@ -117,12 +118,36 @@ precedence left             POSTFIX_PLUS_PLUS, POSTFIX_MINUS_MINUS, DOT;
 
 /* The grammar */
 start with program;
-program                     ::=     var_dcl program
+program                     ::=     var_dcl:vd program:p
+                                    {:
+                                        if (p == null) {
+                                            p = new Program();
+                                        }
+                                        p.addElement(vd);
+                                        RESULT = p;
+                                    :}
                                     |
-                                    func_extern program
+                                    func_extern:fe program:p
+                                    {:
+                                        if (p == null) {
+                                            p = new Program();
+                                        }
+                                        p.addElement(fe);
+                                        RESULT = p;
+                                    :}
                                     |
-                                    struct_dec program
+                                    struct_dec:sd program:p
+                                    {:
+                                        if (p == null) {
+                                            p = new Program();
+                                        }
+                                        p.addElement(sd);
+                                        RESULT = p;
+                                    :}
                                     |
+                                    {:
+                                        RESULT = new Program();
+                                    :}
                                     ;
 
 func_extern                 ::=     func_dcl
@@ -171,15 +196,16 @@ type                        ::=     INT
                                     AUTO
                                     ;
 
-struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl var_dcl_plus END SEMICOLON;
+struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl_plus END SEMICOLON;
 
 var_dcl                     ::=     CONST type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
                                     |
                                     type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
                                     ;
 
-var_dcl_plus                ::=     var_dcl var_dcl_plus
+var_dcl_plus                ::=     var_dcl
                                     |
+                                    var_dcl var_dcl_plus
                                     ;
 
 comma_var_dcl_cnt_star      ::=     COMMA var_dcl_cnt comma_var_dcl_cnt_star
