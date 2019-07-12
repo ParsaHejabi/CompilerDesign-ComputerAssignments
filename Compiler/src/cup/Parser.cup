@@ -80,7 +80,8 @@ nonterminal                 expr;
 nonterminal                 binary_op, method_call, variable, const_val;
 nonterminal                 arithmatic, conditional;
 nonterminal                 parameters;
-nonterminal                 func_dcl, extern_dcl;
+nonterminal     FuncDcl     func_dcl;
+nonterminal     ExternDcl   extern_dcl;
 nonterminal                 arguments, block;
 nonterminal                 statement;
 nonterminal                 assignment, cond_stmt, loop_stmt;
@@ -150,25 +151,59 @@ program                     ::=     var_dcl:vd program:p
                                     :}
                                     ;
 
-func_extern                 ::=     func_dcl
+func_extern                 ::=     func_dcl:fd
+                                    {:
+                                        RESULT = fd;
+                                    :}
                                     |
-                                    extern_dcl
+                                    extern_dcl:ed
+                                    {:
+                                        RESULT = ed;
+                                    :}
                                     ;
 
-func_dcl                    ::=     FUNCTION type IDENTIFIER LPAREN arguments RPAREN SEMICOLON
+func_dcl                    ::=     FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN SEMICOLON
+                                    {:
+                                        RESULT = new FuncDcl(t, i, a, FuncDclType.DECLARE);
+                                    :}
                                     |
-                                    FUNCTION type IDENTIFIER LPAREN RPAREN SEMICOLON
+                                    FUNCTION type:t IDENTIFIER:i LPAREN RPAREN SEMICOLON
+                                    {:
+                                        RESULT = new FuncDcl(t, i, null, FuncDclType.DECLARE);
+                                    :}
                                     |
-                                    FUNCTION type IDENTIFIER LPAREN arguments RPAREN block
+                                    FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN block
+                                    {:
+                                        RESULT = new FuncDcl(t, i, a, FuncDclType.DEFINE);
+                                    :}
                                     |
-                                    FUNCTION type IDENTIFIER LPAREN RPAREN block
+                                    FUNCTION type:t IDENTIFIER:i LPAREN RPAREN block:b
+                                    {:
+                                        RESULT = new FuncDcl(t, i, null, FuncDclType.DEFINE);
+                                    :}
                                     ;
 
-extern_dcl                  ::=     EXTERN type IDENTIFIER SEMICOLON;
+extern_dcl                  ::=     EXTERN type:t IDENTIFIER:i SEMICOLON
+                                    {:
+                                        RESULT = new ExternDcl(t, i);
+                                    :}
+                                    ;
 
-arguments                   ::=     type IDENTIFIER l_r_brace_optional COMMA arguments
+arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA arguments:a
+                                    {:
+                                        if (a == null) {
+                                            a = new Argrument();
+                                        }
+
+                                        a.addElement(new Argument(t, i));
+                                        RESULT = a;
+                                    :}
                                     |
-                                    type IDENTIFIER l_r_brace_optional
+                                    type:t IDENTIFIER:i l_r_brace_optional
+                                    {:
+                                        RESULT = new Argument();
+                                        RESULT.addElement(new Argument(t, i));
+                                    :}
                                     ;
 
 l_r_brace_optional          ::=     LBRACKET RBRACKET l_r_brace_optional
@@ -176,24 +211,54 @@ l_r_brace_optional          ::=     LBRACKET RBRACKET l_r_brace_optional
                                     ;
 
 type                        ::=     INT
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.INT);
+                                    :}
                                     |
                                     BOOL
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.BOOL);
+                                    :}
                                     |
                                     FLOAT
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.FLOAT);
+                                    :}
                                     |
                                     LONG
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.LONG);
+                                    :}
                                     |
                                     CHAR
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.CHAR);
+                                    :}
                                     |
                                     DOUBLE
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.DOUBLE);
+                                    :}
                                     |
                                     IDENTIFIER
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.IDENTIFIER);
+                                    :}
                                     |
                                     STRING
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.STRING);
+                                    :}
                                     |
                                     VOID
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.VOID);
+                                    :}
                                     |
                                     AUTO
+                                    {:
+                                        RESULT = new Type(PrimitiveTypes.AUTO);
+                                    :}
                                     ;
 
 struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl_plus END SEMICOLON;
