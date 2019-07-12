@@ -75,26 +75,27 @@ terminal                    FUNCTION;
 /* Non terminals */
 // Main nonterminals
 nonterminal     Program     program;
-nonterminal                 var_dcl, func_extern, struct_dec;
+nonterminal     VarDcl      var_dcl;
+nonterminal                 func_extern, struct_dec;
 nonterminal     Type        type;
-nonterminal                 var_dcl_cnt;
+nonterminal     VarDclCnt   var_dcl_cnt;
 nonterminal                 expr;
 nonterminal                 binary_op, method_call, variable, const_val;
 nonterminal                 arithmatic, conditional;
 nonterminal                 parameters;
 nonterminal     FuncDcl     func_dcl;
 nonterminal     ExternDcl   extern_dcl;
-nonterminal     Argument    arguments;
+nonterminal     Arguments   arguments;
 nonterminal                 block;
 nonterminal                 statement;
 nonterminal                 assignment, cond_stmt, loop_stmt;
 
 // Plus nonterminals
 nonterminal                 brack_expr_plus;
-nonterminal                 var_dcl_plus;
+nonterminal     VarDcls     var_dcl_plus;
 
 // Star nonterminals
-nonterminal                 comma_var_dcl_cnt_star;
+nonterminal VarDclCnts      comma_var_dcl_cnt_star;
 nonterminal                 var_dcl_or_statement_star;
 nonterminal                 case_block_star;
 
@@ -195,7 +196,7 @@ extern_dcl                  ::=     EXTERN type:t IDENTIFIER:i SEMICOLON
 arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA arguments:a
                                     {:
                                         if (a == null) {
-                                            a = new Argument();
+                                            a = new Arguments();
                                         }
 
                                         a.addElement(new Argument(t, i));
@@ -204,7 +205,7 @@ arguments                   ::=     type:t IDENTIFIER:i l_r_brace_optional COMMA
                                     |
                                     type:t IDENTIFIER:i l_r_brace_optional
                                     {:
-                                        Argument a = new Argument();
+                                        Arguments a = new Arguments();
                                         a.addElement(new Argument(t, i));
                                         RESULT = a;
                                     :}
@@ -265,25 +266,69 @@ type                        ::=     INT
                                     :}
                                     ;
 
-struct_dec                  ::=     RECORD IDENTIFIER BEGIN var_dcl_plus END SEMICOLON;
-
-var_dcl                     ::=     CONST type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
-                                    |
-                                    type var_dcl_cnt comma_var_dcl_cnt_star SEMICOLON
+struct_dec                  ::=     RECORD IDENTIFIER:i BEGIN var_dcl_plus:vdp END SEMICOLON
+                                    {:
+                                        RESULT = new StructDcl(i, vdp);
+                                    :}
                                     ;
 
-var_dcl_plus                ::=     var_dcl
+var_dcl                     ::=     CONST type:t var_dcl_cnt:vdc comma_var_dcl_cnt_star:cvdcs SEMICOLON
+                                    {:
+                                        if (cvdcs == null) {
+                                            cvdcs = new VarDclCnts();
+                                        }
+                                        cvdcs.addElement(vdc);
+                                        RESULT = new VarDcl(true, t, cvdcs);
+                                    :}
                                     |
-                                    var_dcl var_dcl_plus
+                                    type:t var_dcl_cnt:vdc comma_var_dcl_cnt_star:cvdcs SEMICOLON
+                                    {:
+                                        if (cvdcs == null) {
+                                            cvdcs = new VarDclCnts();
+                                        }
+                                        cvdcs.addElement(vdc);
+                                        RESULT = new VarDcl(false, t, cvdcs);
+                                    :}
                                     ;
 
-comma_var_dcl_cnt_star      ::=     COMMA var_dcl_cnt comma_var_dcl_cnt_star
+var_dcl_plus                ::=     var_dcl:vd
+                                    {:
+                                        RESULT = new VarDcls();
+                                        RESULT.addElement(vd);
+                                    :}
                                     |
+                                    var_dcl:vd var_dcl_plus:vdp
+                                    {:
+                                        if (vdp == null) {
+                                            vdp = new VarDcls();
+                                        }
+                                        vdp.addElement(vd);
+                                        RESULT = vdp;
+                                    :}
                                     ;
 
-var_dcl_cnt                 ::=     IDENTIFIER
+comma_var_dcl_cnt_star      ::=     COMMA var_dcl_cnt:vdc comma_var_dcl_cnt_star:cvdcs
+                                    {:
+                                        if (cvdcs == null) {
+                                            cvdcs = new VarDclCnts();
+                                        }
+                                        cvdcs.addElement(vdc);
+                                        RESULT = cvdcs;
+                                    :}
                                     |
-                                    IDENTIFIER EQUAL expr
+                                    {:
+                                    :}
+                                    ;
+
+var_dcl_cnt                 ::=     IDENTIFIER:i
+                                    {:
+                                        RESULT = new VarDclCnt(i, null);
+                                    :}
+                                    |
+                                    IDENTIFIER:i EQUAL expr:e
+                                    {:
+                                        RESULT = new VarDclCnt(i, e);
+                                    :}
                                     ;
 
 block                       ::=     BEGIN var_dcl_or_statement_star END;
