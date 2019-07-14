@@ -146,7 +146,7 @@ EndOfLineComment     = "##" {InputCharacter}*
 <YYINITIAL>{
 /* identifiers */
 //{Identifier}                        {yybegin(POSTFIXID); return symbol(yytext(), ParserSym.IDENTIFIER);}
-{Identifier}                        {return symbol(yytext(), ParserSym.IDENTIFIER);}
+{Identifier}                        {return symbol("IDENTIFIER", ParserSym.IDENTIFIER, yytext());}
 
 /* literals */
 {DecIntegerLiteral}                 {return symbol(yytext(), ParserSym.INT_CONST);}

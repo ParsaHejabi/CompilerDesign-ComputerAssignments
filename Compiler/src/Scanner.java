@@ -29,10 +29,10 @@ class Scanner implements java_cup.runtime.Scanner {
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
    * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l
-   * at the beginning of a line
+   *                  at the beginning of a line
    * l is of the form l = 2*k, k a non negative integer
    */
-  private static final int[] ZZ_LEXSTATE = {
+  private static final int ZZ_LEXSTATE[] = {
           0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 3, 3, 5, 5
   };
 
@@ -310,7 +310,7 @@ class Scanner implements java_cup.runtime.Scanner {
   private static final int ZZ_PUSHBACK_2BIG = 2;
 
   /* error messages for the codes above */
-  private static final String[] ZZ_ERROR_MSG = {
+  private static final String ZZ_ERROR_MSG[] = {
           "Unknown internal scanner error",
           "Error: could not match input",
           "Error: pushback value was too large"
@@ -358,7 +358,7 @@ class Scanner implements java_cup.runtime.Scanner {
    * this buffer contains the current text to be matched and is
    * the source of the yytext() string
    */
-  private char[] zzBuffer = new char[ZZ_BUFFERSIZE];
+  private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
 
   /** the textposition at the last accepting state */
   private int zzMarkedPos;
@@ -487,7 +487,7 @@ class Scanner implements java_cup.runtime.Scanner {
     /* is the buffer big enough? */
     if (zzCurrentPos >= zzBuffer.length - zzFinalHighSurrogate) {
       /* if not: blow it up */
-      char[] newBuffer = new char[zzBuffer.length * 2];
+      char newBuffer[] = new char[zzBuffer.length*2];
       System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
       zzBuffer = newBuffer;
       zzEndRead += zzFinalHighSurrogate;
@@ -580,7 +580,7 @@ class Scanner implements java_cup.runtime.Scanner {
 
 
   /**
-   * Returns the text matched by the current regular expr.
+   * Returns the text matched by the current regular expression.
    */
   public final String yytext() {
     return new String( zzBuffer, zzStartRead, zzMarkedPos-zzStartRead );
@@ -667,7 +667,7 @@ class Scanner implements java_cup.runtime.Scanner {
 
 
   /**
-   * Resumes scanning until the next regular expr is matched,
+   * Resumes scanning until the next regular expression is matched,
    * the end of input is encountered or an I/O-Error occurs.
    *
    * @return      the next token
@@ -822,8 +822,8 @@ class Scanner implements java_cup.runtime.Scanner {
             } 
             // fall through
           case 89: break;
-          case 2: 
-            { return symbol(yytext(), ParserSym.IDENTIFIER);
+          case 2: {
+            return symbol("IDENTIFIER", ParserSym.IDENTIFIER, yytext());
             } 
             // fall through
           case 90: break;
