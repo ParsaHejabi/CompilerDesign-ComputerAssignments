@@ -17,6 +17,13 @@ public class VarDclCnts implements CodeGeneratable {
         varDclCnts.add(vdc);
     }
 
+    public void fixVarDclCntAttributes(Type type, boolean isConstant) {
+        for (VarDclCnt dclCnt : varDclCnts) {
+            dclCnt.setType(type);
+            dclCnt.setConstant(isConstant);
+        }
+    }
+
     @Override
     public String generateCode() {
         return null;

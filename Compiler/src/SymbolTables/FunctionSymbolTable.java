@@ -1,13 +1,15 @@
 package SymbolTables;
 
 import ASTNodes.FuncDcl;
+import ASTNodes.Type;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class FunctionSymbolTable implements SymbolTable {
     public FuncDcl funcDcl;
-    public Hashtable<String, VariableSymbolTable> functionVariables;
+    public Hashtable<String, SymbolTableVariable> functionVariables;
     public Hashtable<String, BlockSymbolTable> functionBlocks;
     public int num;
 
@@ -18,12 +20,12 @@ public class FunctionSymbolTable implements SymbolTable {
         this.num = num;
     }
 
-    public VariableSymbolTable getVariableSymbolTable(String variableName) {
+    public SymbolTableVariable getVariableSymbolTable(String variableName) {
         return functionVariables.get(variableName);
     }
 
-    public void addVariableSymbolTable(String name, VariableSymbolTable variableSymbolTable) {
-        functionVariables.put(name, variableSymbolTable);
+    public void addVariableSymbolTable(String name, SymbolTableVariable symbolTableVariable) {
+        functionVariables.put(name, symbolTableVariable);
     }
 
     public BlockSymbolTable getBlockSymbolTable(String blockName) {
@@ -45,12 +47,19 @@ public class FunctionSymbolTable implements SymbolTable {
     }
 
     @Override
-    public VariableSymbolTable lookupVariableSymbolTable(String name) {
-        return null;
-    }
+    public SymbolTableVariable lookupSymbolTableVariable(String name) {
+        if (functionVariables.get(name) != null) {
+            return functionVariables.get(name);
+        } else {
+            Set<String> keySet = functionBlocks.keySet();
 
-    @Override
-    public VariableSymbolTable localLookupVariableSymbolTable(String name) {
+            for (String key : keySet) {
+                if (functionBlocks.get(key).blockVariables.get(name) != null) {
+                    return functionBlocks.get(key).blockVariables.get(name);
+                }
+            }
+        }
+        System.err.println(this.getClass() + "variable " + name + " not found.");
         return null;
     }
 
@@ -65,11 +74,6 @@ public class FunctionSymbolTable implements SymbolTable {
     }
 
     @Override
-    public void addVariableToSymbolTable(String name, Object variable) {
-        if (variable instanceof VariableSymbolTable) {
-            addVariableSymbolTable(name, (VariableSymbolTable) variable);
-        } else if (variable instanceof BlockSymbolTable) {
-            addBlockSymbolTable(name, (BlockSymbolTable) variable);
-        }
+    public void addSymbolTableVariable(String name, Type type) {
     }
 }

@@ -1,23 +1,25 @@
 package SymbolTables;
 
+import ASTNodes.Type;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class StructSymbolTable implements SymbolTable {
     public String name;
-    public Hashtable<String, VariableSymbolTable> structVariables;
+    public Hashtable<String, SymbolTableVariable> structVariables;
 
     public StructSymbolTable(String name) {
         this.name = name;
         structVariables = new Hashtable<>();
     }
 
-    public VariableSymbolTable getVariableSymbolTable(String variableName) {
+    public SymbolTableVariable getVariableSymbolTable(String variableName) {
         return structVariables.get(variableName);
     }
 
-    public void addVariableSymbolTable(String name, VariableSymbolTable variableSymbolTable) {
-        structVariables.put(name, variableSymbolTable);
+    public void addVariableSymbolTable(String name, SymbolTableVariable symbolTableVariable) {
+        structVariables.put(name, symbolTableVariable);
     }
 
     @Override
@@ -31,13 +33,13 @@ public class StructSymbolTable implements SymbolTable {
     }
 
     @Override
-    public VariableSymbolTable lookupVariableSymbolTable(String name) {
-        return null;
-    }
-
-    @Override
-    public VariableSymbolTable localLookupVariableSymbolTable(String name) {
-        return null;
+    public SymbolTableVariable lookupSymbolTableVariable(String name) {
+        if (structVariables.get(name) != null) {
+            return structVariables.get(name);
+        } else {
+            System.err.println(this.getClass() + "variable " + name + " not found.");
+            return null;
+        }
     }
 
     @Override
@@ -51,7 +53,7 @@ public class StructSymbolTable implements SymbolTable {
     }
 
     @Override
-    public void addVariableToSymbolTable(String name, Object variable) {
-        addVariableSymbolTable(name, (VariableSymbolTable) variable);
+    public void addSymbolTableVariable(String name, Type type) {
+        structVariables.put(name, new SymbolTableVariable(name, type, false));
     }
 }

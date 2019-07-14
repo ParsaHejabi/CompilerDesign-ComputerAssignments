@@ -3,11 +3,12 @@ package ASTNodes;
 import ASTNodes.Enums.FuncDclEnum;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.FunctionSymbolTable;
+import ASTNodes.Interfaces.SymbolTableCreatable;
 import SymbolTables.SymbolTable;
 
 import java.util.Vector;
 
-public class FuncDcl implements CodeGeneratable {
+public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
     public Type type;
     public String identifier;
     public FuncDclEnum funcType;
@@ -119,5 +120,10 @@ public class FuncDcl implements CodeGeneratable {
         }
         symbolTableVector.remove(symbolTableVector.size() - 1);
         return instructions;
+    }
+
+    @Override
+    public void createSymbolTable(SymbolTable symbolTable) {
+
     }
 }

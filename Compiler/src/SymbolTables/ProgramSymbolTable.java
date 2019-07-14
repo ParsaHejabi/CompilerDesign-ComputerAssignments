@@ -1,11 +1,13 @@
 package SymbolTables;
 
+import ASTNodes.Type;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
 public class ProgramSymbolTable implements SymbolTable {
-    public Hashtable<String, VariableSymbolTable> variableSymbolTableHashtable;
+    public Hashtable<String, SymbolTableVariable> variableSymbolTableHashtable;
     public Hashtable<String, FunctionSymbolTable> functionSymbolTableHashtable;
     public Hashtable<String, StructSymbolTable> structSymbolTableHashtable;
 
@@ -15,12 +17,12 @@ public class ProgramSymbolTable implements SymbolTable {
         structSymbolTableHashtable = new Hashtable<>();
     }
 
-    public VariableSymbolTable getVariableSymbolTable(String variableName) {
+    public SymbolTableVariable getVariableSymbolTable(String variableName) {
         return variableSymbolTableHashtable.get(variableName);
     }
 
-    public void addVariableSymbolTable(String name, VariableSymbolTable variableSymbolTable) {
-        variableSymbolTableHashtable.put(name, variableSymbolTable);
+    public void addVariableSymbolTable(String name, SymbolTableVariable symbolTableVariable) {
+        variableSymbolTableHashtable.put(name, symbolTableVariable);
     }
 
     public FunctionSymbolTable getFunctionSymbolTable(String functionName) {
@@ -56,13 +58,13 @@ public class ProgramSymbolTable implements SymbolTable {
     }
 
     @Override
-    public VariableSymbolTable lookupVariableSymbolTable(String name) {
-        return null;
-    }
-
-    @Override
-    public VariableSymbolTable localLookupVariableSymbolTable(String name) {
-        return null;
+    public SymbolTableVariable lookupSymbolTableVariable(String name) {
+        if (variableSymbolTableHashtable.get(name) != null) {
+            return variableSymbolTableHashtable.get(name);
+        } else {
+            System.err.println(this.getClass() + "variable " + name + " not found.");
+            return null;
+        }
     }
 
     @Override
@@ -76,13 +78,7 @@ public class ProgramSymbolTable implements SymbolTable {
     }
 
     @Override
-    public void addVariableToSymbolTable(String name, Object variable) {
-        if (variable instanceof VariableSymbolTable) {
-            addVariableSymbolTable(name, (VariableSymbolTable) variable);
-        } else if (variable instanceof FunctionSymbolTable) {
-            addFunctionSymbolTable(name, (FunctionSymbolTable) variable);
-        } else if (variable instanceof StructSymbolTable) {
-            addStructSymbolTable(name, (StructSymbolTable) variable);
-        }
+    public void addSymbolTableVariable(String name, Type type) {
+        variableSymbolTableHashtable.put(name, new SymbolTableVariable(name, type, true));
     }
 }

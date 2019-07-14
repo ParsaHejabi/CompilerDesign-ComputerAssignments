@@ -1,5 +1,7 @@
 package ASTNodes.Interfaces;
 
+import SymbolTables.SymbolTable;
+
 public interface SymbolTableCreatable {
-    void createSymbolTable();
+    void createSymbolTable(SymbolTable symbolTable);
 }

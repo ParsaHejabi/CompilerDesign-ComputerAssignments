@@ -32,7 +32,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /**
    * Production table.
    */
-  protected static final short _production_table[][] =
+  protected static final short[][] _production_table =
           unpackFromStrings(new String[]{
                   "\000\155\000\002\002\004\000\002\002\004\000\002\002" +
                           "\004\000\002\002\004\000\002\002\002\000\002\004\003" +
@@ -1282,7 +1282,7 @@ class CUP$Parser$actions {
             ArrayList<Object> RESULT = null;
             int sleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
             int sright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-            Object s = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
+            Object s = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
             int vdossleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int vdossright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             ArrayList<Object> vdoss = (ArrayList<Object>) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -1342,7 +1342,7 @@ class CUP$Parser$actions {
             Object RESULT = null;
             int csleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int csright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-            Object cs = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+            Object cs = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
             RESULT = cs;
 
@@ -1356,7 +1356,7 @@ class CUP$Parser$actions {
             Object RESULT = null;
             int lsleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int lsright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-            Object ls = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+            Object ls = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
             RESULT = ls;
 

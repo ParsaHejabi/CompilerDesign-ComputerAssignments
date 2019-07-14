@@ -1,13 +1,13 @@
 package SymbolTables;
 
-import ASTNodes.Enums.TypeEnum;
+import ASTNodes.Type;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class BlockSymbolTable implements SymbolTable {
     public SymbolTable parentSymbolTable;
-    public Hashtable<String, VariableSymbolTable> blockVariables;
+    public Hashtable<String, SymbolTableVariable> blockVariables;
     public Hashtable<String, BlockSymbolTable> blockBlocks;
 
     public BlockSymbolTable(SymbolTable parentSymbolTable) {
@@ -16,12 +16,12 @@ public class BlockSymbolTable implements SymbolTable {
         this.blockBlocks = new Hashtable<>();
     }
 
-    public VariableSymbolTable getVariableSymbolTable(String variableName) {
+    public SymbolTableVariable getVariableSymbolTable(String variableName) {
         return blockVariables.get(variableName);
     }
 
-    public void addVariableSymbolTable(String name, TypeEnum type) {
-        blockVariables.put(name, new VariableSymbolTable(name, type, false));
+    public void addVariableSymbolTable(String name, Type type) {
+        blockVariables.put(name, new SymbolTableVariable(name, type, false));
     }
 
     public BlockSymbolTable getBlockSymbolTable(String blockName) {
@@ -43,13 +43,12 @@ public class BlockSymbolTable implements SymbolTable {
     }
 
     @Override
-    public VariableSymbolTable lookupVariableSymbolTable(String name) {
-        return null;
-    }
-
-    @Override
-    public VariableSymbolTable localLookupVariableSymbolTable(String name) {
-        return null;
+    public SymbolTableVariable lookupSymbolTableVariable(String name) {
+        if (blockVariables.get(name) != null) {
+            return blockVariables.get(name);
+        } else {
+            return parentSymbolTable.lookupSymbolTableVariable(name);
+        }
     }
 
     @Override
@@ -63,11 +62,7 @@ public class BlockSymbolTable implements SymbolTable {
     }
 
     @Override
-    public void addVariableToSymbolTable(String name, Object variable) {
-        if (variable instanceof TypeEnum) {
-            addVariableSymbolTable(name, (TypeEnum) variable);
-        } else if (variable instanceof BlockSymbolTable) {
-            addBlockSymboltable(name);
-        }
+    public void addSymbolTableVariable(String name, Type type) {
+        blockVariables.put(name, new SymbolTableVariable(name, type, false));
     }
 }
