@@ -496,21 +496,39 @@ case_block_star             ::=     CASE INT_CONST:ic COLON block:b case_block_s
                                     :}
                                     ;
 
-loop_stmt                   ::=     FOR LPAREN assignment_optional SEMICOLON expr SEMICOLON assignment_or_expr_optional RPAREN block
+loop_stmt                   ::=     FOR LPAREN assignment:a SEMICOLON expr:e SEMICOLON assignment_or_expr_optional:aoeo RPAREN block:b
+                                    {:
+                                        RESULT = new For(a, e, b, aoeo);
+                                    :}
                                     |
-                                    REPEAT block UNTIL LPAREN expr RPAREN SEMICOLON
+                                    FOR LPAREN SEMICOLON expr:e SEMICOLON assignment_or_expr_optional:aoeo RPAREN block:b
+                                    {:
+                                        RESULT = new For(e, b, aoeo);
+                                    :}
                                     |
-                                    FOREACH LPAREN IDENTIFIER IN IDENTIFIER RPAREN block
+                                    REPEAT block:b UNTIL LPAREN expr:e RPAREN SEMICOLON
+                                    {:
+                                        RESULT = new Repeat(b, e);
+                                    :}
+                                    |
+                                    FOREACH LPAREN IDENTIFIER:i IN IDENTIFIER:i RPAREN block:b
+                                    {:
+                                        RESULT = new Foreach(i, i, b);
+                                    :}
                                     ;
 
-assignment_optional         ::=     assignment
+assignment_or_expr_optional ::=     assignment:a
+                                    {:
+                                        RESULT = new AssignmentOrExpression(a);
+                                    :}
                                     |
-                                    ;
-
-assignment_or_expr_optional ::=     assignment
+                                    expr:e
+                                    {:
+                                        RESULT = new AssignmentOrExpression(e);
+                                    :}
                                     |
-                                    expr
-                                    |
+                                    {:
+                                    :}
                                     ;
 
 expr                        ::=     expr binary_op expr
