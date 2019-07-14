@@ -17,6 +17,22 @@ public class Argument implements CodeGeneratable {
         this.identifier = identifier;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     @Override
     public String generateCode() {
         return null;

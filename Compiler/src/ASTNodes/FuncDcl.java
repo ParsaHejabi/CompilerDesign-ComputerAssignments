@@ -16,6 +16,38 @@ public class FuncDcl implements CodeGeneratable {
         this.arguments = arguments;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public FuncDclEnum getFuncType() {
+        return funcType;
+    }
+
+    public void setFuncType(FuncDclEnum funcType) {
+        this.funcType = funcType;
+    }
+
+    public Arguments getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Arguments arguments) {
+        this.arguments = arguments;
+    }
+
     @Override
     public String generateCode() {
         return null;
