@@ -83,11 +83,11 @@ nonterminal     StructDcl   struct_dec;
 nonterminal     Type        type;
 nonterminal     VarDclCnt   var_dcl_cnt;
 nonterminal     Expr        expr;
-nonterminal                 binary_op;
 nonterminal     MethodCall  method_call;
 nonterminal     Variable    variable;
 nonterminal     ConstValue  const_val;
-nonterminal                 arithmatic, conditional;
+nonterminal                 arithmatic
+nonterminal     conditional;
 nonterminal     Parameters  parameters;
 nonterminal     FuncDcl     func_dcl;
 nonterminal     ExternDcl   extern_dcl;
@@ -98,7 +98,7 @@ nonterminal     Assignment  assignment;
 nonterminal                 cond_stmt, loop_stmt;
 
 // Plus nonterminals
-nonterminal                 brack_expr_plus;
+nonterminal     ExprList    brack_expr_plus;
 nonterminal     VarDcls     var_dcl_plus;
 
 // Star nonterminals
@@ -108,7 +108,6 @@ nonterminal CaseBlock           case_block_star;
 
 // Optional nonterminals
 nonterminal                         l_r_brace_optional;
-nonterminal                         else_block_optional;
 nonterminal AssignmentOrExpression  assignment_or_expr_optional;
 
 /* Precedences */
@@ -415,38 +414,38 @@ statement                   ::=     assignment:a SEMICOLON
 
 assignment                  ::=     variable:v EQUAL expr:e
                                     {:
-                                        RESULT = new Assignment(v, e, AssignmentType.EQUAL);
+                                        RESULT = new Assignment(e, v, AssignmentType.EQUAL);
                                     :}
                                     |
                                     variable:v PLUS_EQUAL expr:e
                                     {:
-                                        RESULT = new Assignment(v, e, AssignmentType.PLUS_EQUAL);
+                                        RESULT = new Assignment(e, v, AssignmentType.PLUS_EQUAL);
                                     :}
                                     |
                                     variable:v MINUS_EQUAL expr:e
                                     {:
-                                        RESULT = new Assignment(v, e, AssignmentType.MINUS_EQUAL);
+                                        RESULT = new Assignment(e, v, AssignmentType.MINUS_EQUAL);
                                     :}
                                     |
                                     variable:v TIMES_EQUAL expr:e
                                     {:
-                                        RESULT = new Assignment(v, e, AssignmentType.TIMES_EQUAL);
+                                        RESULT = new Assignment(e, v, AssignmentType.TIMES_EQUAL);
                                     :}
                                     |
                                     variable:v DIVIDE_EQUAL expr:e
                                     {:
-                                        RESULT = new Assignment(v, e, AssignmentType.DIVIDE_EQUAL);
+                                        RESULT = new Assignment(e, v, AssignmentType.DIVIDE_EQUAL);
                                     :}
                                     ;
 
 method_call                 ::=     IDENTIFIER:i LPAREN parameters:p RPAREN
                                     {:
-                                        RESULT = MethodCall(i, p);
+                                        RESULT = new MethodCall(i, p);
                                     :}
                                     |
                                     IDENTIFIER:i LPAREN RPAREN
                                     {:
-                                        RESULT = MethodCall(i);
+                                        RESULT = new MethodCall(i);
                                     :}
                                     ;
 
@@ -466,23 +465,19 @@ parameters                  ::=     expr:e
                                     :}
                                     ;
 
-cond_stmt                   ::=     IF LPAREN expr:e RPAREN block:b else_block_optional:ebo
+cond_stmt                   ::=     IF LPAREN expr:e RPAREN block:b1 ELSE block:b2
                                     {:
-                                        RESULT = new If(e, b, ebo);
+                                        RESULT = new If(e, b1, b2);
+                                    :}
+                                    |
+                                    IF LPAREN expr:e RPAREN block:b
+                                    {:
+                                        RESULT = new If(e, b);
                                     :}
                                     |
                                     SWITCH LPAREN IDENTIFIER:i RPAREN OF COLON BEGIN case_block_star:cbs DEFAULT COLON block:b END
                                     {:
                                         RESULT = new Switch(i, cbs, b);
-                                    :}
-                                    ;
-
-else_block_optional         ::=     ELSE block:b
-                                    {:
-                                        RESULT = b;
-                                    :}
-                                    |
-                                    {:
                                     :}
                                     ;
 
@@ -515,9 +510,9 @@ loop_stmt                   ::=     FOR LPAREN assignment:a SEMICOLON expr:e SEM
                                         RESULT = new Repeat(b, e);
                                     :}
                                     |
-                                    FOREACH LPAREN IDENTIFIER:i IN IDENTIFIER:i RPAREN block:b
+                                    FOREACH LPAREN IDENTIFIER:i1 IN IDENTIFIER:i2 RPAREN block:b
                                     {:
-                                        RESULT = new Foreach(i, i, b);
+                                        RESULT = new Foreach(i1, i2, b);
                                     :}
                                     ;
 
@@ -535,81 +530,194 @@ assignment_or_expr_optional ::=     assignment:a
                                     :}
                                     ;
 
-expr                        ::=     expr binary_op expr
+expr                        ::=     expr:e1 arithmatic:a expr:e2
+                                    {:
+                                        RESULT = new Expr(e1, e2, a);
+                                    :}
                                     |
-                                    LPAREN expr RPAREN
+                                    expr:e1 conditional:c expr:e2
+                                    {:
+                                        RESULT = new Expr(e1, e2, c);
+                                    :}
                                     |
-                                    method_call
+                                    LPAREN expr:e RPAREN
+                                    {:
+                                        RESULT = e;
+                                    :}
                                     |
-                                    variable
+                                    method_call:mc
+                                    {:
+                                        RESULT = mc;
+                                    :}
                                     |
-                                    const_val
+                                    variable:v
+                                    {:
+                                        RESULT = v;
+                                    :}
                                     |
-                                    MINUS_UNARY expr
+                                    const_val:cv
+                                    {:
+                                        RESULT = cv;
+                                    :}
                                     |
-                                    TILDE expr
+                                    MINUS_UNARY expr:e
+                                    {:
+                                        e.setOpType(UnaryOperators.Minus);
+                                        RESULT = e;
+                                    :}
                                     |
-                                    NOT_EXPR expr
+                                    TILDE expr:e
+                                    {:
+                                        e.setOpType(UnaryOperators.TILDE);
+                                        RESULT = e;
+                                    :}
                                     |
-                                    SIZE_OF LPAREN type RPAREN
+                                    NOT_EXPR expr:e
+                                    {:
+                                        e.setOpType(UnaryOperators.NOT);
+                                        RESULT = e;
+                                    :}
+                                    |
+                                    SIZE_OF LPAREN type:t RPAREN
+                                    {:
+                                        RESULT = new SizeOf(t);
+                                    :}
                                     ;
 
-variable                    ::=     IDENTIFIER
+variable                    ::=     IDENTIFIER:i
+                                    {:
+                                        RESULT = i;
+                                    :}
                                     |
-                                    IDENTIFIER LBRACKET expr RBRACKET brack_expr_plus
+                                    IDENTIFIER:i LBRACKET expr:e RBRACKET brack_expr_plus:bep
+                                    {:
+                                        if (bep == null) {
+                                            bep = new ExprList();
+                                        }
+                                        bep.addElement(e);
+                                        RESULT = new Variable(i, bep);
+                                    :}
                                     |
-                                    variable DOT IDENTIFIER
+                                    variable:v DOT IDENTIFIER:i
+                                    {:
+                                        //TODO NEEDS FIXING PROBABLY
+                                        RESULT = new Variable(i);
+                                    :}
                                     |
-                                    PREFIX_MINUS_MINUS variable
+                                    PREFIX_MINUS_MINUS variable:v
+                                    {:
+                                        RESULT = new UnaryExecution(v, UnaryOperators.MINUS_MINUS);
+                                    :}
                                     |
-                                    PREFIX_PLUS_PLUS variable
+                                    PREFIX_PLUS_PLUS variable:v
+                                    {:
+                                        RESULT = new UnaryExecution(v, UnaryOperators.PLUS_PLUS);
+                                    :}
                                     |
-                                    variable POSTFIX_MINUS_MINUS
+                                    variable:v POSTFIX_MINUS_MINUS
+                                    {:
+                                        RESULT = new UnaryExecution(v, UnaryOperators.MINUS_MINUS);
+                                    :}
                                     |
-                                    variable POSTFIX_PLUS_PLUS
+                                    variable:V POSTFIX_PLUS_PLUS
+                                    {:
+                                        RESULT = new UnaryExecution(v, UnaryOperators.PLUS_PLUS);
+                                    :}
                                     ;
 
-brack_expr_plus             ::=     LBRACKET expr RBRACKET brack_expr_plus
+brack_expr_plus             ::=     LBRACKET expr:e RBRACKET brack_expr_plus:bep
+                                    {:
+                                        if (bep == null) {
+                                            bep = new ExprList();
+                                        }
+                                        bep.addElement(e);
+                                        RESULT = bep;
+                                    :}
                                     |
-                                    ;
-
-binary_op                   ::=     arithmatic
-                                    |
-                                    conditional
+                                    {:
+                                    :}
                                     ;
 
 arithmatic                  ::=     PLUS
+                                    {:
+                                        RESULT = ArithmaticType.PLUS;
+                                    :}
                                     |
                                     MINUS
+                                    {:
+                                        RESULT = ArithmaticType.MINUS;
+                                    :}
                                     |
                                     TIMES
+                                    {:
+                                        RESULT = ArithmaticType.TIMES;
+                                    :}
                                     |
                                     DIVIDE
+                                    {:
+                                        RESULT = ArithmaticType.DIVIDE;
+                                    :}
                                     |
                                     MOD
+                                    {:
+                                        RESULT = ArithmaticType.MOD;
+                                    :}
                                     |
                                     AND_BITWISE
+                                    {:
+                                        RESULT = ArithmaticType.AND;
+                                    :}
                                     |
                                     OR_BITWISE
+                                    {:
+                                        RESULT = ArithmaticType.OR;
+                                    :}
                                     |
                                     XOR_BITWISE
+                                    {:
+                                        RESULT = ArithmaticType.XOR;
+                                    :}
                                     ;
 
 conditional                 ::=     EQUAL_TO
+                                    {:
+                                        RESULT = ConditionType.EQUAL_TO;
+                                    :}
                                     |
                                     NOT_EQUAL_TO
+                                    {:
+                                        RESULT = ConditionType.NOT_EQUAL_TO;
+                                    :}
                                     |
                                     GREATER_THAN_EQUAL_TO
+                                    {:
+                                        RESULT = ConditionType.GREATER_THAN_EQUAL_TO;
+                                    :}
                                     |
                                     LESS_THAN_EQUAL_TO
+                                    {:
+                                        RESULT = ConditionType.LESS_THAN_EQUAL_TO;
+                                    :}
                                     |
                                     LESS_THAN
+                                    {:
+                                        RESULT = ConditionType.LESS_THAN;
+                                    :}
                                     |
                                     GREATER_THAN
+                                    {:
+                                        RESULT = ConditionType.GREATER_THAN;
+                                    :}
                                     |
                                     AND_COND
+                                    {:
+                                        RESULT = ConditionType.AND_COND;
+                                    :}
                                     |
                                     OR_COND
+                                    {:
+                                        RESULT = ConditionType.OR_COND;
+                                    :}
                                     ;
 
 const_val                   ::=     INT_CONST:i
