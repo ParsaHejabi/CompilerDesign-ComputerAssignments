@@ -1,13 +1,11 @@
 package ASTNodes;
 
-import java.beans.Expression;
-
 public class Repeat {
     public Block block;
-    public Expression expression;
+    public Expr expr;
 
-    public Repeat(Block block, Expression expression) {
+    public Repeat(Block block, Expr expr) {
         this.block = block;
-        this.expression = expression;
+        this.expr = expr;
     }
 }

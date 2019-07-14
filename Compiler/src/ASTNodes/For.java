@@ -1,22 +1,20 @@
 package ASTNodes;
 
-import java.beans.Expression;
-
 public class For {
     public Assignment assignment;
-    public Expression expression;
+    public Expr expr;
     public Block block;
     public AssignmentOrExpression assignmentOrExpression;
 
-    public For(Expression expression, Block block, AssignmentOrExpression assignmentOrExpression) {
-        this.expression = expression;
+    public For(Expr expr, Block block, AssignmentOrExpression assignmentOrExpression) {
+        this.expr = expr;
         this.block = block;
         this.assignmentOrExpression = assignmentOrExpression;
     }
 
-    public For(Assignment assignment, Expression expression, Block block, AssignmentOrExpression assignmentOrExpression) {
+    public For(Assignment assignment, Expr expr, Block block, AssignmentOrExpression assignmentOrExpression) {
         this.assignment = assignment;
-        this.expression = expression;
+        this.expr = expr;
         this.block = block;
         this.assignmentOrExpression = assignmentOrExpression;
     }

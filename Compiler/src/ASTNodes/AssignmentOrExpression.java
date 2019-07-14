@@ -1,13 +1,11 @@
 package ASTNodes;
 
-import java.beans.Expression;
-
 public class AssignmentOrExpression {
     public Assignment assignment;
-    public Expression expression;
+    public Expr expr;
 
-    public AssignmentOrExpression(Expression expression) {
-        this.expression = expression;
+    public AssignmentOrExpression(Expr expr) {
+        this.expr = expr;
     }
 
     public AssignmentOrExpression(Assignment assignment) {

@@ -78,19 +78,24 @@ terminal                    FUNCTION;
 // Main nonterminals
 nonterminal     Program     program;
 nonterminal     VarDcl      var_dcl;
-nonterminal                 func_extern, struct_dec;
+nonterminal                 func_extern;
+nonterminal     StructDcl   struct_dec;
 nonterminal     Type        type;
 nonterminal     VarDclCnt   var_dcl_cnt;
 nonterminal     Expr        expr;
-nonterminal                 binary_op, method_call, variable, const_val;
+nonterminal                 binary_op;
+nonterminal     MethodCall  method_call;
+nonterminal     Variable    variable;
+nonterminal     ConstValue  const_val;
 nonterminal                 arithmatic, conditional;
-nonterminal                 parameters;
+nonterminal     Parameters  parameters;
 nonterminal     FuncDcl     func_dcl;
 nonterminal     ExternDcl   extern_dcl;
 nonterminal     Arguments   arguments;
-nonterminal                 block;
+nonterminal     Block       block;
 nonterminal                 statement;
-nonterminal                 assignment, cond_stmt, loop_stmt;
+nonterminal     Assignment  assignment;
+nonterminal                 cond_stmt, loop_stmt;
 
 // Plus nonterminals
 nonterminal                 brack_expr_plus;
@@ -99,13 +104,12 @@ nonterminal     VarDcls     var_dcl_plus;
 // Star nonterminals
 nonterminal VarDclCnts          comma_var_dcl_cnt_star;
 nonterminal ArrayList<Object>   var_dcl_or_statement_star;
-nonterminal                     case_block_star;
+nonterminal CaseBlock           case_block_star;
 
 // Optional nonterminals
-nonterminal                 l_r_brace_optional;
-nonterminal                 else_block_optional;
-nonterminal                 assignment_optional;
-nonterminal                 assignment_or_expr_optional;
+nonterminal                         l_r_brace_optional;
+nonterminal                         else_block_optional;
+nonterminal AssignmentOrExpression  assignment_or_expr_optional;
 
 /* Precedences */
 precedence left             COMMA;
