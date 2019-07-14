@@ -834,146 +834,122 @@ class Scanner implements java_cup.runtime.Scanner {
                 return symbol("INT_CONST", ParserSym.INT_CONST, new Integer(yytext()));
             } 
             // fall through
-            case 93:
-                break;
+            case 93: break;
           case 4: 
             { return symbol(yytext(), ParserSym.DOT);
             } 
             // fall through
-            case 94:
-                break;
+            case 94: break;
           case 5: 
             { return symbol(yytext(), ParserSym.PLUS);
             } 
             // fall through
-            case 95:
-                break;
+            case 95: break;
           case 6: 
             { return symbol(yytext(), ParserSym.MINUS);
             } 
             // fall through
-            case 96:
-                break;
+            case 96: break;
           case 7: 
             { 
             } 
             // fall through
-            case 97:
-                break;
+            case 97: break;
           case 8: 
             { return symbol(yytext(), ParserSym.DIVIDE);
             } 
             // fall through
-            case 98:
-                break;
+            case 98: break;
           case 9: 
             { return symbol(yytext(), ParserSym.EQUAL);
             } 
             // fall through
-            case 99:
-                break;
+            case 99: break;
           case 10: 
             { return symbol(yytext(), ParserSym.LESS_THAN);
             } 
             // fall through
-            case 100:
-                break;
+            case 100: break;
           case 11: 
             { return symbol(yytext(), ParserSym.GREATER_THAN);
             } 
             // fall through
-            case 101:
-                break;
+            case 101: break;
           case 12: 
             { return symbol(yytext(), ParserSym.TILDE);
             } 
             // fall through
-            case 102:
-                break;
+            case 102: break;
           case 13: 
             { return symbol(yytext(), ParserSym.AND_BITWISE);
             } 
             // fall through
-            case 103:
-                break;
+            case 103: break;
           case 14: 
             { return symbol(yytext(), ParserSym.OR_BITWISE);
             } 
             // fall through
-            case 104:
-                break;
+            case 104: break;
           case 15: 
             { return symbol(yytext(), ParserSym.XOR_BITWISE);
             } 
             // fall through
-            case 105:
-                break;
+            case 105: break;
           case 16: 
             { return symbol(yytext(), ParserSym.TIMES);
             } 
             // fall through
-            case 106:
-                break;
+            case 106: break;
           case 17: 
             { return symbol(yytext(), ParserSym.MOD);
             } 
             // fall through
-            case 107:
-                break;
+            case 107: break;
           case 18: 
             { return symbol(yytext(), ParserSym.LPAREN);
             } 
             // fall through
-            case 108:
-                break;
+            case 108: break;
           case 19: 
             { return symbol(yytext(), ParserSym.RPAREN);
             } 
             // fall through
-            case 109:
-                break;
+            case 109: break;
           case 20: 
             { return symbol(yytext(), ParserSym.COMMA);
             } 
             // fall through
-            case 110:
-                break;
+            case 110: break;
           case 21: 
             { return symbol(yytext(), ParserSym.COLON);
             } 
             // fall through
-            case 111:
-                break;
+            case 111: break;
           case 22: 
             { return symbol(yytext(), ParserSym.SEMICOLON);
             } 
             // fall through
-            case 112:
-                break;
+            case 112: break;
           case 23: 
             { return symbol(yytext(), ParserSym.LBRACKET);
             } 
             // fall through
-            case 113:
-                break;
+            case 113: break;
           case 24: 
             { return symbol(yytext(), ParserSym.RBRACKET);
             } 
             // fall through
-            case 114:
-                break;
+            case 114: break;
           case 25: 
             { string.setLength(0); string.append(yytext()); yybegin(STRING);
             } 
             // fall through
-            case 115:
-                break;
+            case 115: break;
           case 26: 
             { string.setLength(0); string.append(yytext()); yybegin(CHAR);
             } 
             // fall through
-            case 116:
-                break;
+            case 116: break;
           case 27: 
             { string.append(yytext());
             } 
@@ -983,17 +959,15 @@ class Scanner implements java_cup.runtime.Scanner {
             case 28: {
                 string.append(yytext());
                 yybegin(YYINITIAL);
-                return symbol("STRING", ParserSym.STRING_CONST, string.subSequence(1, string.length() - 1));
+                return symbol("STRING", ParserSym.STRING_CONST, string.subSequence(1, string.length()-1));
             } 
             // fall through
-            case 118:
-                break;
+            case 118: break;
           case 29: 
             { yybegin(SPECIALCHARSTR);
             } 
             // fall through
-            case 119:
-                break;
+            case 119: break;
           case 30: 
             { string.append(yytext()); yybegin(ENDCHAR);
             } 
@@ -1006,38 +980,32 @@ class Scanner implements java_cup.runtime.Scanner {
                 return symbol("CHAR", ParserSym.CHAR_CONST, string.toString());
             } 
             // fall through
-            case 121:
-                break;
+            case 121: break;
           case 32: 
             { string.append("\\n"); yybegin(STRING); return symbol("\\n", ParserSym.CHAR_CONST);
             } 
             // fall through
-            case 122:
-                break;
+            case 122: break;
           case 33: 
             { string.append("\\r"); yybegin(STRING); return symbol("\\r", ParserSym.CHAR_CONST);
             } 
             // fall through
-            case 123:
-                break;
+            case 123: break;
           case 34: 
             { string.append("\\t"); yybegin(STRING); return symbol("\\t", ParserSym.CHAR_CONST);
             } 
             // fall through
-            case 124:
-                break;
+            case 124: break;
           case 35: 
             { string.append("\\\""); yybegin(STRING); return symbol("\\\"", ParserSym.CHAR_CONST);
             } 
             // fall through
-            case 125:
-                break;
+            case 125: break;
           case 36: 
             { string.append("\\\'"); yybegin(STRING); return symbol("\\\'", ParserSym.CHAR_CONST);
             } 
             // fall through
-            case 126:
-                break;
+            case 126: break;
           case 37: 
             { string.append("\\\\"); yybegin(STRING); return symbol("\\\\", ParserSym.CHAR_CONST);
             } 
@@ -1090,7 +1058,7 @@ class Scanner implements java_cup.runtime.Scanner {
                 break;
             case 45: {
                 return symbol(yytext(), ParserSym.IF);
-            }
+            } 
             // fall through
             case 135:
                 break;
@@ -1246,19 +1214,19 @@ class Scanner implements java_cup.runtime.Scanner {
                 break;
             case 70: {
                 return symbol(yytext(), ParserSym.CHAR);
-            }
+            } 
             // fall through
             case 160:
                 break;
             case 71: {
                 return symbol("TRUE", ParserSym.BOOL_CONST, new Boolean(yytext()));
-            }
+            } 
             // fall through
             case 161:
                 break;
             case 72: {
                 return symbol(yytext(), ParserSym.VOID);
-            }
+            } 
             // fall through
             case 162:
                 break;
@@ -1270,7 +1238,7 @@ class Scanner implements java_cup.runtime.Scanner {
                 break;
             case 74: {
                 return symbol("FALSE", ParserSym.BOOL_CONST, new Boolean(yytext()));
-            }
+            } 
             // fall through
             case 164:
                 break;
@@ -1368,8 +1336,7 @@ class Scanner implements java_cup.runtime.Scanner {
             { return symbol(yytext(), ParserSym.CONTINUE);
             } 
             // fall through
-            case 180:
-                break;
+            case 180: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

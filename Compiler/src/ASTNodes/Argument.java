@@ -2,8 +2,6 @@ package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
 
-import java.util.ArrayList;
-
 public class Argument implements CodeGeneratable {
 
     public Type type;
@@ -36,5 +34,10 @@ public class Argument implements CodeGeneratable {
     @Override
     public String generateCode() {
         return null;
+    }
+
+    @Override
+    public void visit() {
+
     }
 }

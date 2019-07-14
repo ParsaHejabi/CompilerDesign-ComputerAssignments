@@ -61,4 +61,9 @@ public class FuncDcl implements CodeGeneratable {
     public String generateCode() {
         return null;
     }
+
+    @Override
+    public void visit() {
+
+    }
 }

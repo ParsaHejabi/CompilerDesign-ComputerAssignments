@@ -76,26 +76,26 @@ terminal                    FUNCTION;
 
 /* Non terminals */
 // Main nonterminals
-nonterminal     Program         program;
-nonterminal     VarDcl          var_dcl;
-nonterminal                     func_extern;
-nonterminal     StructDcl       struct_dec;
-nonterminal     Type            type;
-nonterminal     VarDclCnt       var_dcl_cnt;
-nonterminal     Expr            expr;
-nonterminal     MethodCall      method_call;
-nonterminal     Variable        variable;
-nonterminal     ConstValue      const_val;
-nonterminal     ArithmaticType  arithmatic;
-nonterminal     ConditionType   conditional;
-nonterminal     Parameters      parameters;
-nonterminal     FuncDcl         func_dcl;
-nonterminal     ExternDcl       extern_dcl;
-nonterminal     Arguments       arguments;
-nonterminal     Block           block;
-nonterminal                     statement;
-nonterminal     Assignment      assignment;
-nonterminal                     cond_stmt, loop_stmt;
+nonterminal     Program             program;
+nonterminal     VarDcl              var_dcl;
+nonterminal     CodeGeneralisable   func_extern;
+nonterminal     StructDcl           struct_dec;
+nonterminal     Type                type;
+nonterminal     VarDclCnt           var_dcl_cnt;
+nonterminal     Expr                expr;
+nonterminal     MethodCall          method_call;
+nonterminal     Variable            variable;
+nonterminal     ConstValue          const_val;
+nonterminal     ArithmaticType      arithmatic;
+nonterminal     ConditionType       conditional;
+nonterminal     Parameters          parameters;
+nonterminal     FuncDcl             func_dcl;
+nonterminal     ExternDcl           extern_dcl;
+nonterminal     Arguments           arguments;
+nonterminal     Block               block;
+nonterminal                         statement;
+nonterminal     Assignment          assignment;
+nonterminal                         cond_stmt, loop_stmt;
 
 // Plus nonterminals
 nonterminal     ExprList    brack_expr_plus;
