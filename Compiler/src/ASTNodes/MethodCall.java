@@ -1,6 +1,6 @@
 package ASTNodes;
 
-public class MethodCall {
+public class MethodCall extends Expr {
     public String Identifier;
     public Parameters parameters;
 
