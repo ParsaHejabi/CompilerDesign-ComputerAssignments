@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class VarDclCnts implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
+    public void visit(SymbolTable symbolTable) {
 
     }
 }

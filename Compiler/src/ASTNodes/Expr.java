@@ -3,8 +3,10 @@ package ASTNodes;
 import ASTNodes.Enums.ArithmaticType;
 import ASTNodes.Enums.ConditionType;
 import ASTNodes.Enums.UnaryOperators;
+import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
-public class Expr {
+public class Expr implements CodeGeneratable {
     public UnaryOperators opType;
     public Expr expr1, expr2;
     public ArithmaticType arithmaticType;
@@ -27,5 +29,15 @@ public class Expr {
 
     public void setOpType(UnaryOperators opType) {
         this.opType = opType;
+    }
+
+    @Override
+    public String generateCode() {
+        return null;
+    }
+
+    @Override
+    public void visit(SymbolTable symbolTable) {
+
     }
 }

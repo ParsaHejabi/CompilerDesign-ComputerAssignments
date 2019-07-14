@@ -2,6 +2,7 @@ package ASTNodes;
 
 import ASTNodes.Enums.FuncDclEnum;
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 public class FuncDcl implements CodeGeneratable {
     public Type type;
@@ -63,7 +64,7 @@ public class FuncDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
-
+    public void visit(SymbolTable symbolTable) {
+        //symbolTable.
     }
 }

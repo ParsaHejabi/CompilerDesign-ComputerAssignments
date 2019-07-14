@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 public class StructDcl implements CodeGeneratable {
     public String identifier;
@@ -17,7 +18,7 @@ public class StructDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
+    public void visit(SymbolTable symbolTable) {
 
     }
 }

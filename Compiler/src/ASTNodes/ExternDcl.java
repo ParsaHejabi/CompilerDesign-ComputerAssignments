@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 public class ExternDcl implements CodeGeneratable {
     public Type type;
@@ -17,7 +18,6 @@ public class ExternDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
-
+    public void visit(SymbolTable symbolTable) {
     }
 }

@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 public class VarDcl implements CodeGeneratable {
     public boolean isConstant;
@@ -19,7 +20,7 @@ public class VarDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
+    public void visit(SymbolTable symbolTable) {
         this.generateCode();
 
         for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {

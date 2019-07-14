@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
 public class Argument implements CodeGeneratable {
 
@@ -37,7 +38,7 @@ public class Argument implements CodeGeneratable {
     }
 
     @Override
-    public void visit() {
+    public void visit(SymbolTable symbolTable) {
 
     }
 }

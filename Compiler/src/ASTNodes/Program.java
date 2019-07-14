@@ -2,6 +2,7 @@ package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
+import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,11 @@ public class Program implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void visit() {
+    public void visit(SymbolTable symbolTable) {
         this.generateCode();
 
         for (CodeGeneratable cg : programElements) {
-            cg.visit();
+            cg.visit(symbolTable);
         }
     }
 
