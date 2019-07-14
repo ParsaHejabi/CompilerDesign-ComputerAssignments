@@ -2,7 +2,7 @@ package ASTNodes;
 
 import ASTNodes.Enums.TypeEnum;
 
-public class ConstValue {
+public class ConstValue extends Expr {
     public TypeEnum type;
     public Object value;
 
