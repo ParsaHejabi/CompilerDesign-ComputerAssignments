@@ -1,16 +1,16 @@
 package ASTNodes;
 
 import ASTNodes.Enums.ArithmaticType;
-import ASTNodes.Enums.CondiTionType;
+import ASTNodes.Enums.ConditionType;
 import ASTNodes.Enums.UnaryOperators;
 
 public class Expr {
     public UnaryOperators opType;
     public Expr expr1, expr2;
     public ArithmaticType arithmaticType;
-    public CondiTionType condiTionType;
+    public ConditionType condiTionType;
 
-    public Expr(Expr expr1, Expr expr2, CondiTionType condiionType) {
+    public Expr(Expr expr1, Expr expr2, ConditionType condiionType) {
         this.expr1 = expr1;
         this.expr2 = expr2;
         this.condiTionType = condiionType;

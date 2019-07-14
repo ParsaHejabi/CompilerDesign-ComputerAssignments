@@ -1,6 +1,6 @@
 package ASTNodes.Enums;
 
-public enum CondiTionType {
+public enum ConditionType {
     EQUAL_TO,
     NOT_EQUAL_TO,
     GREATER_THAN_EQUAL_TO,
