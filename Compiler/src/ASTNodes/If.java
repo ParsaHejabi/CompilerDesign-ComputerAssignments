@@ -10,4 +10,9 @@ public class If {
         this.ifBlock = ifBlock;
         this.elseBlock = elseBlock;
     }
+
+    public If(Expr expr, Block ifBlock) {
+        this.expr = expr;
+        this.ifBlock = ifBlock;
+    }
 }
