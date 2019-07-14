@@ -368,55 +368,132 @@ var_dcl_or_statement_star   ::=     var_dcl:vd var_dcl_or_statement_star:vdoss
                                     :}
                                     ;
 
-statement                   ::=     assignment SEMICOLON
+statement                   ::=     assignment:a SEMICOLON
+                                    {:
+                                        RESULT = a;
+                                    :}
                                     |
-                                    method_call SEMICOLON
+                                    method_call:mc SEMICOLON
+                                    {:
+                                        RESULT = mc;
+                                    :}
                                     |
-                                    cond_stmt
+                                    cond_stmt:cs
+                                    {:
+                                        RESULT = cs;
+                                    :}
                                     |
-                                    loop_stmt
+                                    loop_stmt:ls
+                                    {:
+                                        RESULT = ls;
+                                    :}
                                     |
-                                    RETURN expr SEMICOLON
+                                    RETURN expr:e SEMICOLON
+                                    {:
+                                        RESULT = new Return(e);
+                                    :}
                                     |
                                     RETURN SEMICOLON
+                                    {:
+                                        RESULT = new Return();
+                                    :}
                                     |
                                     BREAK SEMICOLON
+                                    {:
+                                        RESULT = new Break();
+                                    :}
                                     |
                                     CONTINUE SEMICOLON
+                                    {:
+                                        RESULT = new Continue();
+                                    :}
                                     ;
 
-assignment                  ::=     variable EQUAL expr
+assignment                  ::=     variable:v EQUAL expr:e
+                                    {:
+                                        RESULT = new Assignment(v, e, AssignmentType.EQUAL);
+                                    :}
                                     |
-                                    variable PLUS_EQUAL expr
+                                    variable:v PLUS_EQUAL expr:e
+                                    {:
+                                        RESULT = new Assignment(v, e, AssignmentType.PLUS_EQUAL);
+                                    :}
                                     |
-                                    variable MINUS_EQUAL expr
+                                    variable:v MINUS_EQUAL expr:e
+                                    {:
+                                        RESULT = new Assignment(v, e, AssignmentType.MINUS_EQUAL);
+                                    :}
                                     |
-                                    variable TIMES_EQUAL expr
+                                    variable:v TIMES_EQUAL expr:e
+                                    {:
+                                        RESULT = new Assignment(v, e, AssignmentType.TIMES_EQUAL);
+                                    :}
                                     |
-                                    variable DIVIDE_EQUAL expr
+                                    variable:v DIVIDE_EQUAL expr:e
+                                    {:
+                                        RESULT = new Assignment(v, e, AssignmentType.DIVIDE_EQUAL);
+                                    :}
                                     ;
 
-method_call                 ::=     IDENTIFIER LPAREN parameters RPAREN
+method_call                 ::=     IDENTIFIER:i LPAREN parameters:p RPAREN
+                                    {:
+                                        RESULT = MethodCall(i, p);
+                                    :}
                                     |
-                                    IDENTIFIER LPAREN RPAREN
+                                    IDENTIFIER:i LPAREN RPAREN
+                                    {:
+                                        RESULT = MethodCall(i);
+                                    :}
                                     ;
 
-parameters                  ::=     expr
+parameters                  ::=     expr:e
+                                    {:
+                                        RESULT = new Parameters();
+                                        RESULT.addElement(e);
+                                    :}
                                     |
-                                    expr COMMA parameters
+                                    expr:e COMMA parameters:p
+                                    {:
+                                        if (p == null) {
+                                            p = new Parameters();
+                                        }
+                                        p.addElement(e);
+                                        RESULT = p;
+                                    :}
                                     ;
 
-cond_stmt                   ::=     IF LPAREN expr RPAREN block else_block_optional
+cond_stmt                   ::=     IF LPAREN expr:e RPAREN block:b else_block_optional:ebo
+                                    {:
+                                        RESULT = new If(e, b, ebo);
+                                    :}
                                     |
-                                    SWITCH LPAREN IDENTIFIER RPAREN OF COLON BEGIN case_block_star DEFAULT COLON block END
+                                    SWITCH LPAREN IDENTIFIER:i RPAREN OF COLON BEGIN case_block_star:cbs DEFAULT COLON block:b END
+                                    {:
+                                        RESULT = new Switch(i, cbs, b);
+                                    :}
                                     ;
 
-else_block_optional         ::=     ELSE block
+else_block_optional         ::=     ELSE block:b
+                                    {:
+                                        RESULT = b;
+                                    :}
                                     |
+                                    {:
+                                    :}
                                     ;
 
-case_block_star             ::=     CASE INT_CONST COLON block case_block_star
+case_block_star             ::=     CASE INT_CONST:ic COLON block:b case_block_star:cbs
+                                    {:
+                                        if (cbs == null) {
+                                            cbs = new CaseBlock();
+                                        }
+                                        ConstValue cv = new ConstValue(TypeEnum.INT, ic);
+                                        cbs.addElement(new Case(cv, b));
+                                        RESULT = cbs;
+                                    :}
                                     |
+                                    {:
+                                    :}
                                     ;
 
 loop_stmt                   ::=     FOR LPAREN assignment_optional SEMICOLON expr SEMICOLON assignment_or_expr_optional RPAREN block
