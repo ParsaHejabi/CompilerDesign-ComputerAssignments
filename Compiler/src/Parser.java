@@ -727,10 +727,10 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // program ::= func_extern program 
             {
-              Program RESULT =null;
-		int feleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
+              Program RESULT = null;
+              int feleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
               int feright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-              CodeGeneralisable fe = (CodeGeneralisable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+              CodeGeneratable fe = (CodeGeneratable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Program p = (Program)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -748,8 +748,8 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // program ::= struct_dec program 
             {
-              Program RESULT =null;
-		int sdleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
+              Program RESULT = null;
+              int sdleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
               int sdright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
               StructDcl sd = (StructDcl) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -780,7 +780,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // func_extern ::= func_dcl 
           {
-            CodeGeneralisable RESULT =null;
+            CodeGeneratable RESULT =null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int fdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		FuncDcl fd = (FuncDcl)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -794,7 +794,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // func_extern ::= extern_dcl 
           {
-            CodeGeneralisable RESULT =null;
+            CodeGeneratable RESULT =null;
 		int edleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int edright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ExternDcl ed = (ExternDcl)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -852,8 +852,8 @@ class CUP$Parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
-		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).right;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).left;
+              int aright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).right;
               Arguments a = (Arguments) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).value;
               int bleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
               int bright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;

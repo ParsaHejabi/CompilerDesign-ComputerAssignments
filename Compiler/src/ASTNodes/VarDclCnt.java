@@ -2,8 +2,9 @@ package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
+import ASTNodes.Interfaces.SymbolTableCreatable;
 
-public class VarDclCnt implements CodeGeneratable {
+public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
     public String identifier;
     public Expr expr;
 
@@ -23,6 +24,11 @@ public class VarDclCnt implements CodeGeneratable {
         }
         //expr.visit();
 
+
+    }
+
+    @Override
+    public void createSymbolTable() {
 
     }
 }
