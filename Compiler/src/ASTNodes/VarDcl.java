@@ -1,8 +1,9 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import ASTNodes.Interfaces.SymbolTableCreatable;
 
-public class VarDcl implements CodeGeneratable {
+public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
     public boolean isConstant;
     public Type type;
     public VarDclCnts varDclCnts;
@@ -24,6 +25,13 @@ public class VarDcl implements CodeGeneratable {
 
         for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {
             dclCnt.visit();
+        }
+    }
+
+    @Override
+    public void createSymbolTable() {
+        for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {
+            dclCnt.createSymbolTable();
         }
     }
 }

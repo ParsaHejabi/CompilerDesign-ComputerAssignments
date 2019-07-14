@@ -78,7 +78,7 @@ terminal                    FUNCTION;
 // Main nonterminals
 nonterminal     Program             program;
 nonterminal     VarDcl              var_dcl;
-nonterminal     CodeGeneralisable   func_extern;
+nonterminal     CodeGeneratable     func_extern;
 nonterminal     StructDcl           struct_dec;
 nonterminal     Type                type;
 nonterminal     VarDclCnt           var_dcl_cnt;
