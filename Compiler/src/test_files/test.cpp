@@ -5,6 +5,7 @@ record myRecord
 begin
     int a;
     double b,c = 2.0;
+    string s = "kir to bardia";
 end;
 ##var_dcl
 const int var_dclA = method_callA();

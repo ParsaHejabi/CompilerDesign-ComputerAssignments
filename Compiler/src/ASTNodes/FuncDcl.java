@@ -10,7 +10,7 @@ public class FuncDcl implements CodeGeneratable {
     public Arguments arguments;
     public Block block;
 
-    public FuncDcl(Type type, String identifier, FuncDclEnum funcType, Arguments arguments, Block block) {
+    public FuncDcl(Type type, String identifier, Arguments arguments, FuncDclEnum funcType, Block block) {
         this.type = type;
         this.identifier = identifier;
         this.funcType = funcType;

@@ -11,7 +11,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 %char
 
 %{
-     StringBuffer string = new StringBuffer();
+     StringBuilder string = new StringBuilder();
      public Scanner(java.io.Reader in, ComplexSymbolFactory sf){
          this(in);
          symbolFactory = sf;
@@ -88,7 +88,7 @@ EndOfLineComment     = "##" {InputCharacter}*
 <YYINITIAL> "else"                  {return symbol(yytext(), ParserSym.ELSE);}
 <YYINITIAL> "end"                   {return symbol(yytext(), ParserSym.END);}
 <YYINITIAL> "extern"                {return symbol(yytext(), ParserSym.EXTERN);}
-<YYINITIAL> "false"                 {return symbol(yytext(), ParserSym.BOOL_CONST);}
+<YYINITIAL> "false"                 {return symbol("FALSE", ParserSym.BOOL_CONST, new Boolean(yytext()));}
 <YYINITIAL> "function"              {return symbol(yytext(), ParserSym.FUNCTION);}
 <YYINITIAL> "float"                 {return symbol(yytext(), ParserSym.FLOAT);}
 <YYINITIAL> "for"                   {return symbol(yytext(), ParserSym.FOR);}
@@ -100,7 +100,7 @@ EndOfLineComment     = "##" {InputCharacter}*
 <YYINITIAL> "sizeof"                {return symbol(yytext(), ParserSym.SIZE_OF);}
 <YYINITIAL> "string"                {return symbol(yytext(), ParserSym.STRING);}
 <YYINITIAL> "switch"                {return symbol(yytext(), ParserSym.SWITCH);}
-<YYINITIAL> "true"                  {return symbol(yytext(), ParserSym.BOOL_CONST);}
+<YYINITIAL> "true"                  {return symbol("TRUE", ParserSym.BOOL_CONST, new Boolean(yytext()));}
 <YYINITIAL> "auto"                  {return symbol(yytext(), ParserSym.AUTO);}
 <YYINITIAL> "void"                  {return symbol(yytext(), ParserSym.VOID);}
 <YYINITIAL> "until"                 {return symbol(yytext(), ParserSym.UNTIL);}
@@ -149,10 +149,10 @@ EndOfLineComment     = "##" {InputCharacter}*
 {Identifier}                        {return symbol("IDENTIFIER", ParserSym.IDENTIFIER, yytext());}
 
 /* literals */
-{DecIntegerLiteral}                 {return symbol(yytext(), ParserSym.INT_CONST);}
-{HexIntegerLiteral}                 {return symbol(yytext(), ParserSym.INT_CONST);}
-{FloatLiteral}                      {return symbol(yytext(), ParserSym.REAL_CONST);}
-{FloatScientificLiteral}            {return symbol(yytext(), ParserSym.REAL_CONST);}
+{DecIntegerLiteral}                 {return symbol("INT_CONST", ParserSym.INT_CONST, new Integer(yytext()));}
+{HexIntegerLiteral}                 {return symbol("INT_CONST", ParserSym.INT_CONST, new Integer(yytext()));}
+{FloatLiteral}                      {return symbol("REAL_CONST", ParserSym.REAL_CONST, new Double(yytext()));}
+{FloatScientificLiteral}            {return symbol("REAL_CONST", ParserSym.REAL_CONST, new Double(yytext()));}
 \"                                  {string.setLength(0); string.append(yytext()); yybegin(STRING);}
 \'                                  {string.setLength(0); string.append(yytext()); yybegin(CHAR);}
 
@@ -170,7 +170,7 @@ EndOfLineComment     = "##" {InputCharacter}*
 //}
 
 <STRING>{
-\"                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol(string.toString(),ParserSym.STRING_CONST);}
+\"                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol("STRING", ParserSym.STRING_CONST, string.subSequence(1,string.length()-1));}
 [^\n\r\"\\]                         {string.append(yytext());}
 \\                                  {yybegin(SPECIALCHARSTR);}
 }
@@ -196,12 +196,12 @@ r                                   {string.append("\\r"); yybegin(STRING); retu
 }
 
 <SPECIALCHAR>{
-\'                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol(string.toString(), ParserSym.CHAR_CONST);}
+\'                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol("SPECIAL_CHAR", ParserSym.CHAR_CONST, string.toString());}
 [^]                                 {error("Illegal character <"+ yytext()+">");}
 }
 
 <ENDCHAR>{
-\'                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol(string.toString(), ParserSym.CHAR_CONST);}
+\'                                  {string.append(yytext()); yybegin(YYINITIAL); return symbol("CHAR", ParserSym.CHAR_CONST, string.toString());}
 [^]                                 {error("Illegal character <"+ yytext()+">");}
 }
 
