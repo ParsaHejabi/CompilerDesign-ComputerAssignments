@@ -1872,7 +1872,7 @@ class CUP$Parser$actions {
               int eright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
               Expr e = (Expr) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-              e.setOpType(UnaryOperators.Minus);
+              e.setOpType(UnaryOperators.MINUS);
               RESULT = e;
                                     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -1931,7 +1931,7 @@ class CUP$Parser$actions {
               int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
               String i = (String) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-              RESULT = i;
+              RESULT = new Variable(i);
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable", 8, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2025,9 +2025,9 @@ class CUP$Parser$actions {
           case 84: // variable ::= variable POSTFIX_PLUS_PLUS 
             {
               Variable RESULT = null;
-              int Vleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
-              int Vright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-              Variable V = (Variable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
+              int vleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
+              int vright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
+              Variable v = (Variable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
 
               RESULT = new UnaryExecution(v, UnaryOperators.PLUS_PLUS);
 

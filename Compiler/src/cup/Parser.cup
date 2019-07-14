@@ -562,7 +562,7 @@ expr                        ::=     expr:e1 arithmatic:a expr:e2
                                     |
                                     MINUS_UNARY expr:e
                                     {:
-                                        e.setOpType(UnaryOperators.Minus);
+                                        e.setOpType(UnaryOperators.MINUS);
                                         RESULT = e;
                                     :}
                                     |
@@ -586,7 +586,7 @@ expr                        ::=     expr:e1 arithmatic:a expr:e2
 
 variable                    ::=     IDENTIFIER:i
                                     {:
-                                        RESULT = i;
+                                        RESULT = new Variable(i);
                                     :}
                                     |
                                     IDENTIFIER:i LBRACKET expr:e RBRACKET brack_expr_plus:bep
@@ -619,7 +619,7 @@ variable                    ::=     IDENTIFIER:i
                                         RESULT = new UnaryExecution(v, UnaryOperators.MINUS_MINUS);
                                     :}
                                     |
-                                    variable:V POSTFIX_PLUS_PLUS
+                                    variable:v POSTFIX_PLUS_PLUS
                                     {:
                                         RESULT = new UnaryExecution(v, UnaryOperators.PLUS_PLUS);
                                     :}

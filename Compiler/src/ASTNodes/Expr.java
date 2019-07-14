@@ -10,6 +10,9 @@ public class Expr {
     public ArithmaticType arithmaticType;
     public ConditionType condiTionType;
 
+    public Expr() {
+    }
+
     public Expr(Expr expr1, Expr expr2, ConditionType condiionType) {
         this.expr1 = expr1;
         this.expr2 = expr2;

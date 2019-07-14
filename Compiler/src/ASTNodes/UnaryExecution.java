@@ -2,7 +2,7 @@ package ASTNodes;
 
 import ASTNodes.Enums.UnaryOperators;
 
-public class UnaryExecution {
+public class UnaryExecution extends Variable {
     public Variable var;
     public UnaryOperators type;
 
