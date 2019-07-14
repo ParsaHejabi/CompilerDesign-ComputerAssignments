@@ -8,6 +8,15 @@ public class FuncDcl implements CodeGeneratable {
     public String identifier;
     public FuncDclEnum funcType;
     public Arguments arguments;
+    public Block block;
+
+    public FuncDcl(Type type, String identifier, FuncDclEnum funcType, Arguments arguments, Block block) {
+        this.type = type;
+        this.identifier = identifier;
+        this.funcType = funcType;
+        this.arguments = arguments;
+        this.block = block;
+    }
 
     public FuncDcl(Type type, String identifier, Arguments arguments, FuncDclEnum funcType) {
         this.type = type;

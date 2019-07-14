@@ -4,18 +4,11 @@ function void method_callA();
 record myRecord
 begin
     int a;
-    double b = 2.0;
+    double b,c = 2.0;
 end;
 ##var_dcl
 const int var_dclA = method_callA();
 bool var_dclB = not true;
-##const float
-##const long
-##const char
-##const double
-##const
-##const string
-##const auto
 
 function int main()
 begin

@@ -181,14 +181,14 @@ func_dcl                    ::=     FUNCTION type:t IDENTIFIER:i LPAREN argument
                                         RESULT = new FuncDcl(t, i, null, FuncDclEnum.DECLARE);
                                     :}
                                     |
-                                    FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN block
+                                    FUNCTION type:t IDENTIFIER:i LPAREN arguments:a RPAREN block:b
                                     {:
-                                        RESULT = new FuncDcl(t, i, a, FuncDclEnum.DEFINE);
+                                        RESULT = new FuncDcl(t, i, a, FuncDclEnum.DEFINE,b);
                                     :}
                                     |
                                     FUNCTION type:t IDENTIFIER:i LPAREN RPAREN block:b
                                     {:
-                                        RESULT = new FuncDcl(t, i, null, FuncDclEnum.DEFINE);
+                                        RESULT = new FuncDcl(t, i, null, FuncDclEnum.DEFINE,b);
                                     :}
                                     ;
 
