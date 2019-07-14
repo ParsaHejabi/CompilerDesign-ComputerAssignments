@@ -1,8 +1,12 @@
 package ASTNodes;
 
-import java.util.ArrayList;
+import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.SymbolTable;
 
-public class Block {
+import java.util.ArrayList;
+import java.util.Vector;
+
+public class Block implements CodeGeneratable {
     public ArrayList<Object> varDcls_statements;
 
     public Block() {
@@ -11,5 +15,15 @@ public class Block {
 
     public Block(ArrayList<Object> varDcls_statements) {
         this.varDcls_statements = varDcls_statements;
+    }
+
+    @Override
+    public String generateCode() {
+        return null;
+    }
+
+    @Override
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

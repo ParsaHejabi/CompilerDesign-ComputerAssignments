@@ -4,6 +4,8 @@ import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
 
+import java.util.Vector;
+
 public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
     public String identifier;
     public Expr expr;
@@ -19,11 +21,11 @@ public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
+    public String visit(Vector<SymbolTable> symbolTableVector) {
         if (expr != null) {
         }
         //expr.visit();
-
+        return null;
 
     }
 

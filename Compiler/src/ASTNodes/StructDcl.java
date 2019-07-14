@@ -3,6 +3,8 @@ package ASTNodes;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
+import java.util.Vector;
+
 public class StructDcl implements CodeGeneratable {
     public String identifier;
     public VarDcls varDcls;
@@ -18,7 +20,7 @@ public class StructDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

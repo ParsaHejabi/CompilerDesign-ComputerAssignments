@@ -2,8 +2,10 @@ package ASTNodes.Interfaces;
 
 import SymbolTables.SymbolTable;
 
+import java.util.Vector;
+
 public interface CodeGeneratable {
     String generateCode();
 
-    void visit(SymbolTable symbolTable);
+    String visit(Vector<SymbolTable> symbolTableVector);
 }

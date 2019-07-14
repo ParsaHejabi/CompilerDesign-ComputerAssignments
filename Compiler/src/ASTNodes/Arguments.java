@@ -4,8 +4,11 @@ import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Arguments implements CodeGeneratable {
+
+
     public ArrayList<Argument> args;
 
     public Arguments() {
@@ -22,7 +25,11 @@ public class Arguments implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
+    }
 
+    public int size() {
+        return args.size();
     }
 }

@@ -2,7 +2,10 @@ package ASTNodes;
 
 import ASTNodes.Enums.FuncDclEnum;
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.FunctionSymbolTable;
 import SymbolTables.SymbolTable;
+
+import java.util.Vector;
 
 public class FuncDcl implements CodeGeneratable {
     public Type type;
@@ -64,7 +67,57 @@ public class FuncDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-        //symbolTable.
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        String instructions = "";
+        symbolTableVector.add(symbolTableVector.lastElement().getBlock(identifier));
+
+        if (funcType == FuncDclEnum.DECLARE) {
+            if (arguments != null) {
+                if (arguments.args != null) {
+                    for (Argument arg : arguments.args) {
+                        instructions += arg.visit(symbolTableVector);
+                    }
+                }
+
+            }
+            return instructions;
+        } else {
+            String args = "";
+            if (arguments != null) {
+                if (arguments.args != null) {
+                    int i = 0;
+                    for (Argument arg : arguments.args) {
+                        arg.visit(symbolTableVector);
+                        // some LLVM code
+                        String argType = arg.type.getValue();
+                        String argName = arg.identifier;
+                        String argument = arg.type.getTypeForLLVM() + "* %" + argName + "_ptr";
+                        //String arg = getTypeForLLVM(argType) + " %" + argName;
+                        args = args.concat(((i == 0) ? "" : ",") + argument);
+                        i++;
+                    }
+                }
+
+            }
+            String returnType = type.getValue();
+            // TODO fix this getCurrentFunctionSymbolTable()
+            FunctionSymbolTable fst = symbolTableVector.firstElement().getCurrentFunctionSymbolTable();
+            String functionNumber = "";
+            if (fst != null && !identifier.equals("main")) {
+                functionNumber = "." + fst.num;
+            }
+
+            String llvm = "define " + type.getTypeForLLVM() + " @" + identifier + functionNumber + "(" + args + ") {";
+            instructions += llvm + "\n";
+
+            block.visit(symbolTableVector);
+
+            if (returnType.equals("void")) {
+                instructions += "ret void\n";
+            }
+            instructions += "}\n";
+        }
+        symbolTableVector.remove(symbolTableVector.size() - 1);
+        return instructions;
     }
 }

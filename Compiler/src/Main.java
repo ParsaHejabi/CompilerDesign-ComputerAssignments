@@ -1,9 +1,12 @@
 import ASTNodes.Program;
+import SymbolTables.ProgramSymbolTable;
+import SymbolTables.SymbolTable;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Symbol;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.Vector;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,6 +18,11 @@ public class Main {
             Symbol symbol = p.parse();
             Program debug = (Program) symbol.value;
             System.out.println(debug);
+
+            Program program = (Program) symbol.value;
+            Vector<SymbolTable> st = new Vector<>();
+            st.add(new ProgramSymbolTable());
+            System.out.println(program.visit(st));
         } catch (Exception e) {
             e.printStackTrace();
         }

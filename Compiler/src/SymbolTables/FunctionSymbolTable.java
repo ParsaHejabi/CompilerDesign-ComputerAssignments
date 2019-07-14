@@ -9,11 +9,13 @@ public class FunctionSymbolTable implements SymbolTable {
     public FuncDcl funcDcl;
     public Hashtable<String, VariableSymbolTable> functionVariables;
     public Hashtable<String, BlockSymbolTable> functionBlocks;
+    public int num;
 
-    public FunctionSymbolTable(FuncDcl funcDcl) {
+    public FunctionSymbolTable(FuncDcl funcDcl, int num) {
         this.funcDcl = funcDcl;
         functionVariables = new Hashtable<>();
         functionBlocks = new Hashtable<>();
+        this.num = num;
     }
 
     public VariableSymbolTable getVariableSymbolTable(String variableName) {

@@ -3,6 +3,8 @@ package ASTNodes;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
+import java.util.Vector;
+
 public class Argument implements CodeGeneratable {
 
     public Type type;
@@ -38,7 +40,7 @@ public class Argument implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

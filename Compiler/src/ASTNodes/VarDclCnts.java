@@ -4,6 +4,7 @@ import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class VarDclCnts implements CodeGeneratable {
     public ArrayList<VarDclCnt> varDclCnts;
@@ -22,7 +23,7 @@ public class VarDclCnts implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

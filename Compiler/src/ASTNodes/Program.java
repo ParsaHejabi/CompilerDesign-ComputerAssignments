@@ -5,6 +5,7 @@ import ASTNodes.Interfaces.SymbolTableCreatable;
 import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Program implements CodeGeneratable, SymbolTableCreatable {
 
@@ -20,16 +21,18 @@ public class Program implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-        this.generateCode();
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        String instructions = "";
+        instructions += this.generateCode();
 
         for (CodeGeneratable cg : programElements) {
-            cg.visit(symbolTable);
+            instructions += cg.visit(symbolTableVector);
         }
+        return instructions;
     }
 
     @Override

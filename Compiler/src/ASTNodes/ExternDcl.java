@@ -3,6 +3,8 @@ package ASTNodes;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
+import java.util.Vector;
+
 public class ExternDcl implements CodeGeneratable {
     public Type type;
     public String identifier;
@@ -18,6 +20,7 @@ public class ExternDcl implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

@@ -6,6 +6,8 @@ import ASTNodes.Enums.UnaryOperators;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 
+import java.util.Vector;
+
 public class Expr implements CodeGeneratable {
     public UnaryOperators opType;
     public Expr expr1, expr2;
@@ -37,7 +39,7 @@ public class Expr implements CodeGeneratable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
-
+    public String visit(Vector<SymbolTable> symbolTableVector) {
+        return null;
     }
 }

@@ -4,6 +4,8 @@ import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.SymbolTable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
 
+import java.util.Vector;
+
 public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
     public boolean isConstant;
     public Type type;
@@ -21,12 +23,13 @@ public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void visit(SymbolTable symbolTable) {
+    public String visit(Vector<SymbolTable> symbolTableVector) {
         this.generateCode();
 
         for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {
-            dclCnt.visit();
+            dclCnt.visit(symbolTableVector);
         }
+        return "";
     }
 
     @Override
