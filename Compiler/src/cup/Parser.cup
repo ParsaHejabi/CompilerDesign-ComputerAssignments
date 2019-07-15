@@ -722,31 +722,31 @@ conditional                 ::=     EQUAL_TO
 
 const_val                   ::=     INT_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.INT, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.INT), i);
                                     :}
                                     |
                                     REAL_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.DOUBLE, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.DOUBLE), i);
                                     :}
                                     |
                                     CHAR_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.CHAR, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.CHAR), i);
                                     :}
                                     |
                                     BOOL_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.BOOL, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.BOOL), i);
                                     :}
                                     |
                                     STRING_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.STRING, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.STRING), i);
                                     :}
                                     |
                                     LONG_CONST:i
                                     {:
-                                        RESULT = new ConstValue(TypeEnum.LONG, i);
+                                        RESULT = new ConstValue(new Type(TypeEnum.LONG), i);
                                     :}
                                     ;

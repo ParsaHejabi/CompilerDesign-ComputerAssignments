@@ -1,6 +1,7 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.ProgramSymbolTable;
 import SymbolTables.SymbolTable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
 import SymbolTables.SymbolTableVariable;
@@ -36,14 +37,38 @@ public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override
     public String visit(Vector<SymbolTable> symbolTableVector) {
+        String instructions = "";
         if (expr != null) {
+            instructions += expr.visit(symbolTableVector);
         }
-        //expr.visit();
+        String varType = type.getValue();
+        boolean isLocal = false;
+        if (!((symbolTableVector.lastElement()) instanceof ProgramSymbolTable)) {
+            isLocal = true;
+        }
+
+        if (isLocal) {
+            StringBuilder stringBuilder = new StringBuilder();
+            //stringBuilder.append("%" + identifier + "_ptr = alloca ");
+            // TODO add for n dimention array
+            if (expr == null) {
+                varType = type.getTypeForLLVM();
+                stringBuilder.append("%" + identifier + "_ptr = alloca " + varType);
+            } else if (expr instanceof ConstValue) {
+                varType = ((ConstValue) expr).type.getTypeForLLVM();
+                stringBuilder.append("%" + identifier + "_ptr = alloca " + varType + "\n");
+                stringBuilder.append("store " + varType + " " + ((ConstValue) expr).value + ", " + varType + "* %" + identifier + "_ptr" + "\n");
+
+            }
+            return stringBuilder.toString();
+        } else {
+
+        }
         return null;
 
     }

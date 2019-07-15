@@ -24,12 +24,13 @@ public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public String visit(Vector<SymbolTable> symbolTableVector) {
-        this.generateCode();
+        String instructions = "";
+        instructions += this.generateCode();
 
         for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {
-            dclCnt.visit(symbolTableVector);
+            instructions += dclCnt.visit(symbolTableVector);
         }
-        return "";
+        return instructions;
     }
 
     @Override

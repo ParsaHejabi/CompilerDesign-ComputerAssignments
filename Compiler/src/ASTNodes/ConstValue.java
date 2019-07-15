@@ -3,10 +3,10 @@ package ASTNodes;
 import ASTNodes.Enums.TypeEnum;
 
 public class ConstValue extends Expr {
-    public TypeEnum type;
+    public Type type;
     public Object value;
 
-    public ConstValue(TypeEnum type, Object value) {
+    public ConstValue(Type type, Object value) {
         this.type = type;
         this.value = value;
     }

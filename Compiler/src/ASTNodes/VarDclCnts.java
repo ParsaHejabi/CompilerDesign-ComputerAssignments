@@ -26,11 +26,12 @@ public class VarDclCnts implements CodeGeneratable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override
     public String visit(Vector<SymbolTable> symbolTableVector) {
+
         return null;
     }
 }
