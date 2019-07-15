@@ -4,6 +4,7 @@ import ASTNodes.Enums.FuncDclEnum;
 import ASTNodes.Interfaces.CodeGeneratable;
 import SymbolTables.FunctionSymbolTable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
+import SymbolTables.ProgramSymbolTable;
 import SymbolTables.SymbolTable;
 
 import java.util.Vector;
@@ -101,7 +102,6 @@ public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
 
             }
             String returnType = type.getValue();
-            // TODO fix this getCurrentFunctionSymbolTable()
             FunctionSymbolTable fst = symbolTableVector.firstElement().getCurrentFunctionSymbolTable();
             String functionNumber = "";
             if (fst != null && !identifier.equals("main")) {
@@ -124,6 +124,14 @@ public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public void createSymbolTable(SymbolTable symbolTable) {
+        ProgramSymbolTable programSymbolTable = (ProgramSymbolTable) symbolTable;
 
+        // Has no blocks
+        if (funcType == FuncDclEnum.DECLARE) {
+
+        } else {
+
+//            block.visit(symbolTable.getBlock(identifier));
+        }
     }
 }

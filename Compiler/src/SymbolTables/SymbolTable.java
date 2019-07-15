@@ -1,8 +1,7 @@
 package SymbolTables;
 
+import ASTNodes.FuncDcl;
 import ASTNodes.Type;
-
-import java.util.ArrayList;
 
 public interface SymbolTable {
     SymbolTable getBlock(String name);
@@ -11,7 +10,7 @@ public interface SymbolTable {
 
     SymbolTableVariable lookupSymbolTableVariable(String name);
 
-    boolean lookupFunction(String name, ArrayList paramNames, String[] paramTypes, String returnType);
+    FunctionSymbolTable lookupFunction(FuncDcl funcDcl);
 
     FunctionSymbolTable getCurrentFunctionSymbolTable();
 

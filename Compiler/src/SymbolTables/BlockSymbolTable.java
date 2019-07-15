@@ -1,8 +1,8 @@
 package SymbolTables;
 
+import ASTNodes.FuncDcl;
 import ASTNodes.Type;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class BlockSymbolTable implements SymbolTable {
@@ -52,13 +52,17 @@ public class BlockSymbolTable implements SymbolTable {
     }
 
     @Override
-    public boolean lookupFunction(String name, ArrayList paramNames, String[] paramTypes, String returnType) {
-        return false;
+    public FunctionSymbolTable lookupFunction(FuncDcl funcDcl) {
+        return parentSymbolTable.lookupFunction(funcDcl);
     }
 
     @Override
     public FunctionSymbolTable getCurrentFunctionSymbolTable() {
-        return null;
+        if (parentSymbolTable instanceof FunctionSymbolTable) {
+            return (FunctionSymbolTable) parentSymbolTable;
+        } else {
+            return parentSymbolTable.getCurrentFunctionSymbolTable();
+        }
     }
 
     @Override

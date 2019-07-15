@@ -1,8 +1,8 @@
 package SymbolTables;
 
+import ASTNodes.FuncDcl;
 import ASTNodes.Type;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -68,8 +68,15 @@ public class ProgramSymbolTable implements SymbolTable {
     }
 
     @Override
-    public boolean lookupFunction(String name, ArrayList paramNames, String[] paramTypes, String returnType) {
-        return false;
+    public FunctionSymbolTable lookupFunction(FuncDcl funcDcl) {
+        Set<String> keySet = this.functionSymbolTableHashtable.keySet();
+
+        for (String key : keySet) {
+            if (functionSymbolTableHashtable.get(key).funcDcl == funcDcl) {
+                return functionSymbolTableHashtable.get(key);
+            }
+        }
+        return null;
     }
 
     @Override

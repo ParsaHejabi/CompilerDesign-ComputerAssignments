@@ -32,7 +32,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /**
    * Production table.
    */
-  protected static final short[][] _production_table =
+  protected static final short _production_table[][] =
           unpackFromStrings(new String[]{
                   "\000\155\000\002\002\004\000\002\002\004\000\002\002" +
                           "\004\000\002\002\004\000\002\002\002\000\002\004\003" +
@@ -726,11 +726,11 @@ class CUP$Parser$actions {
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // program ::= func_extern program 
-            {
-              Program RESULT = null;
-              int feleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
-              int feright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-              CodeGeneratable fe = (CodeGeneratable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+          {
+            Program RESULT = null;
+            int feleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
+            int feright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
+            CodeGeneratable fe = (CodeGeneratable) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Program p = (Program)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -747,11 +747,11 @@ class CUP$Parser$actions {
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // program ::= struct_dec program 
-            {
-              Program RESULT = null;
-              int sdleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
-              int sdright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-              StructDcl sd = (StructDcl) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+          {
+            Program RESULT = null;
+            int sdleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
+            int sdright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
+            StructDcl sd = (StructDcl) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Program p = (Program)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -851,8 +851,8 @@ class CUP$Parser$actions {
 		Type t = (Type)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
-		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
-		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).left;
+		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 4)).value;
+              int aleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).left;
               int aright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).right;
               Arguments a = (Arguments) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 2)).value;
               int bleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
@@ -1282,7 +1282,7 @@ class CUP$Parser$actions {
             ArrayList<Object> RESULT = null;
             int sleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).left;
             int sright = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).right;
-            Object s = ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
+            Object s = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top - 1)).value;
             int vdossleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int vdossright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             ArrayList<Object> vdoss = (ArrayList<Object>) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
@@ -1342,7 +1342,7 @@ class CUP$Parser$actions {
             Object RESULT = null;
             int csleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int csright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-            Object cs = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+            Object cs = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
             RESULT = cs;
 
@@ -1356,7 +1356,7 @@ class CUP$Parser$actions {
             Object RESULT = null;
             int lsleft = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).left;
             int lsright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
-            Object ls = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+            Object ls = (Object) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
             RESULT = ls;
 
@@ -2255,7 +2255,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             Integer i = (Integer) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.INT, i);
+            RESULT = new ConstValue(new Type(TypeEnum.INT), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2269,7 +2269,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             Double i = (Double) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.DOUBLE, i);
+            RESULT = new ConstValue(new Type(TypeEnum.DOUBLE), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2283,7 +2283,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             Character i = (Character) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.CHAR, i);
+            RESULT = new ConstValue(new Type(TypeEnum.CHAR), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2297,7 +2297,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             Boolean i = (Boolean) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.BOOL, i);
+            RESULT = new ConstValue(new Type(TypeEnum.BOOL), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2311,7 +2311,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             String i = (String) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.STRING, i);
+            RESULT = new ConstValue(new Type(TypeEnum.STRING), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }
@@ -2325,7 +2325,7 @@ class CUP$Parser$actions {
             int iright = ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).right;
             Long i = (Long) ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 
-            RESULT = new ConstValue(TypeEnum.LONG, i);
+            RESULT = new ConstValue(new Type(TypeEnum.LONG), i);
 
             CUP$Parser$result = parser.getSymbolFactory().newSymbol("const_val", 9, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
             }

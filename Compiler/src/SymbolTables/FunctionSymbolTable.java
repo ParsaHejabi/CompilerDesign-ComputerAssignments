@@ -3,7 +3,6 @@ package SymbolTables;
 import ASTNodes.FuncDcl;
 import ASTNodes.Type;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -64,8 +63,12 @@ public class FunctionSymbolTable implements SymbolTable {
     }
 
     @Override
-    public boolean lookupFunction(String name, ArrayList paramNames, String[] paramTypes, String returnType) {
-        return false;
+    public FunctionSymbolTable lookupFunction(FuncDcl funcDcl) {
+        if (this.funcDcl == funcDcl) {
+            return this;
+        } else {
+            return null;
+        }
     }
 
     @Override

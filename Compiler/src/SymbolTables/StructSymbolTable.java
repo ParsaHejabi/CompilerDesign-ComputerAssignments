@@ -1,8 +1,8 @@
 package SymbolTables;
 
+import ASTNodes.FuncDcl;
 import ASTNodes.Type;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class StructSymbolTable implements SymbolTable {
@@ -43,8 +43,8 @@ public class StructSymbolTable implements SymbolTable {
     }
 
     @Override
-    public boolean lookupFunction(String name, ArrayList paramNames, String[] paramTypes, String returnType) {
-        return false;
+    public FunctionSymbolTable lookupFunction(FuncDcl funcDcl) {
+        return null;
     }
 
     @Override
