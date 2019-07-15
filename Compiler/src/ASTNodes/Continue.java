@@ -1,4 +1,13 @@
 package ASTNodes;
 
-public class Continue {
+import ASTNodes.Interfaces.SymbolTableCreatable;
+import SymbolTables.SymbolTable;
+
+import java.util.Vector;
+
+public class Continue implements SymbolTableCreatable {
+    @Override
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
+
+    }
 }

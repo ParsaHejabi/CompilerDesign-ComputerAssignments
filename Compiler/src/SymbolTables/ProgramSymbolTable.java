@@ -88,4 +88,8 @@ public class ProgramSymbolTable implements SymbolTable {
     public void addSymbolTableVariable(String name, Type type) {
         variableSymbolTableHashtable.put(name, new SymbolTableVariable(name, type, true));
     }
+
+    @Override
+    public void addBlock(String name, SymbolTable parentSymbolTable) {
+    }
 }

@@ -105,7 +105,7 @@ public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
             FunctionSymbolTable fst = symbolTableVector.firstElement().getCurrentFunctionSymbolTable();
             String functionNumber = "";
             if (fst != null && !identifier.equals("main")) {
-                functionNumber = "." + fst.num;
+                functionNumber = "." + FunctionSymbolTable.num;
             }
 
             String llvm = "define " + type.getTypeForLLVM() + " @" + identifier + functionNumber + "(" + args + ") {";
@@ -123,15 +123,15 @@ public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void createSymbolTable(SymbolTable symbolTable) {
-        ProgramSymbolTable programSymbolTable = (ProgramSymbolTable) symbolTable;
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
+        ProgramSymbolTable programSymbolTable = (ProgramSymbolTable) symbolTableVector.lastElement();
+        programSymbolTable.addFunctionSymbolTable(identifier, new FunctionSymbolTable(this));
 
-        // Has no blocks
-        if (funcType == FuncDclEnum.DECLARE) {
-
-        } else {
-
-//            block.visit(symbolTable.getBlock(identifier));
+        if (funcType == FuncDclEnum.DEFINE) {
+            programSymbolTable.addFunctionSymbolTable(identifier, new FunctionSymbolTable(this));
+            symbolTableVector.add(symbolTableVector.lastElement().getBlock(identifier));
+            block.createSymbolTable(symbolTableVector);
+            symbolTableVector.remove(symbolTableVector.size() - 1);
         }
     }
 }

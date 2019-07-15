@@ -19,8 +19,10 @@ public class Main {
             Program debug = (Program) symbol.value;
 //            System.out.println(debug);
 
+            Vector<SymbolTable> symbolTableVector = new Vector<>();
             ProgramSymbolTable programSymbolTable = new ProgramSymbolTable();
-            debug.createSymbolTable(programSymbolTable);
+            symbolTableVector.add(programSymbolTable);
+            debug.createSymbolTable(symbolTableVector);
             System.out.println("salam");
 
             Program program = (Program) symbol.value;

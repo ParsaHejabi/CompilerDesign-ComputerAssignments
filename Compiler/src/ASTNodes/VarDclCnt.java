@@ -86,10 +86,10 @@ public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void createSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addSymbolTableVariable(identifier, type);
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
+        symbolTableVector.lastElement().addSymbolTableVariable(identifier, type);
 
-        SymbolTableVariable table = symbolTable.lookupSymbolTableVariable(identifier);
+        SymbolTableVariable table = symbolTableVector.lastElement().lookupSymbolTableVariable(identifier);
 
         if (expr != null) {
             table.exprList.exprs.add(expr);

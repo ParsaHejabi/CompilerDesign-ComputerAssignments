@@ -36,11 +36,11 @@ public class Program implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void createSymbolTable(SymbolTable symbolTable) {
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
         for (CodeGeneratable cg : programElements) {
             if (cg instanceof SymbolTableCreatable) {
                 SymbolTableCreatable symbolTableCreatable = (SymbolTableCreatable) cg;
-                symbolTableCreatable.createSymbolTable(symbolTable);
+                symbolTableCreatable.createSymbolTable(symbolTableVector);
             }
         }
     }

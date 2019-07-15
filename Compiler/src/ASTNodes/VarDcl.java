@@ -34,10 +34,10 @@ public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
     }
 
     @Override
-    public void createSymbolTable(SymbolTable symbolTable) {
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
         varDclCnts.fixVarDclCntAttributes(type, isConstant);
         for (VarDclCnt dclCnt : varDclCnts.varDclCnts) {
-            dclCnt.createSymbolTable(symbolTable);
+            dclCnt.createSymbolTable(symbolTableVector);
         }
     }
 }

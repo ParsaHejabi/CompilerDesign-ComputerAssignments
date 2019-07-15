@@ -1,6 +1,11 @@
 package ASTNodes;
 
-public class For {
+import ASTNodes.Interfaces.SymbolTableCreatable;
+import SymbolTables.SymbolTable;
+
+import java.util.Vector;
+
+public class For implements SymbolTableCreatable {
     public Assignment assignment;
     public Expr expr;
     public Block block;
@@ -17,5 +22,10 @@ public class For {
         this.expr = expr;
         this.block = block;
         this.assignmentOrExpression = assignmentOrExpression;
+    }
+
+    @Override
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
+
     }
 }

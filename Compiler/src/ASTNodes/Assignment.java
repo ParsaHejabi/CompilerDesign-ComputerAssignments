@@ -1,8 +1,12 @@
 package ASTNodes;
 
 import ASTNodes.Enums.AssignmentType;
+import ASTNodes.Interfaces.SymbolTableCreatable;
+import SymbolTables.SymbolTable;
 
-public class Assignment {
+import java.util.Vector;
+
+public class Assignment implements SymbolTableCreatable {
     public Expr expr;
     public Variable var;
     public AssignmentType assignmentType;
@@ -19,5 +23,10 @@ public class Assignment {
     }
 
     public Assignment() {
+    }
+
+    @Override
+    public void createSymbolTable(Vector<SymbolTable> symbolTableVector) {
+
     }
 }

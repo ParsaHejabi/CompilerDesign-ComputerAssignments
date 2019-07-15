@@ -10,13 +10,13 @@ public class FunctionSymbolTable implements SymbolTable {
     public FuncDcl funcDcl;
     public Hashtable<String, SymbolTableVariable> functionVariables;
     public Hashtable<String, BlockSymbolTable> functionBlocks;
-    public int num;
+    public static int num = 0;
 
-    public FunctionSymbolTable(FuncDcl funcDcl, int num) {
+    public FunctionSymbolTable(FuncDcl funcDcl) {
         this.funcDcl = funcDcl;
         functionVariables = new Hashtable<>();
         functionBlocks = new Hashtable<>();
-        this.num = num;
+        num++;
     }
 
     public SymbolTableVariable getVariableSymbolTable(String variableName) {
@@ -78,5 +78,10 @@ public class FunctionSymbolTable implements SymbolTable {
 
     @Override
     public void addSymbolTableVariable(String name, Type type) {
+    }
+
+    @Override
+    public void addBlock(String name, SymbolTable parentSymbolTable) {
+        this.functionBlocks.put(name, new BlockSymbolTable(parentSymbolTable));
     }
 }

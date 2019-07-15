@@ -15,4 +15,6 @@ public interface SymbolTable {
     FunctionSymbolTable getCurrentFunctionSymbolTable();
 
     void addSymbolTableVariable(String name, Type type);
+
+    void addBlock(String name, SymbolTable parentSymbolTable);
 }

@@ -56,4 +56,8 @@ public class StructSymbolTable implements SymbolTable {
     public void addSymbolTableVariable(String name, Type type) {
         structVariables.put(name, new SymbolTableVariable(name, type, false));
     }
+
+    @Override
+    public void addBlock(String name, SymbolTable parentSymbolTable) {
+    }
 }

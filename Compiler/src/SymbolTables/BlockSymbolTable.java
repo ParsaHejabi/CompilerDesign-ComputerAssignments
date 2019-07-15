@@ -69,4 +69,9 @@ public class BlockSymbolTable implements SymbolTable {
     public void addSymbolTableVariable(String name, Type type) {
         blockVariables.put(name, new SymbolTableVariable(name, type, false));
     }
+
+    @Override
+    public void addBlock(String name, SymbolTable parentSymbolTable) {
+        this.blockBlocks.put(name, new BlockSymbolTable(parentSymbolTable));
+    }
 }
