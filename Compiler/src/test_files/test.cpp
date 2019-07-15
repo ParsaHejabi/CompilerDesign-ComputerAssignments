@@ -1,1 +1,3 @@
-function int main();
+record a begin
+    int a;
+end;

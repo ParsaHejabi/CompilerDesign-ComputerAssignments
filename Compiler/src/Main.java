@@ -11,7 +11,7 @@ import java.util.Vector;
 public class Main {
     public static void main(String[] args) {
         String cppFilePath = new File("").getAbsolutePath();
-        try (FileReader fileReader = new FileReader(cppFilePath + "/src/test_files/var-dcl-test.cpp")) {
+        try (FileReader fileReader = new FileReader(cppFilePath + "/src/test_files/test.cpp")) {
             ComplexSymbolFactory complexSymbolFactory = new ComplexSymbolFactory();
             Parser p = new Parser(new Scanner(fileReader, complexSymbolFactory), complexSymbolFactory);
 //            p.debug_parse();
@@ -23,10 +23,11 @@ public class Main {
             debug.createSymbolTable(programSymbolTable);
             System.out.println("salam");
 
-//            Program program = (Program) symbol.value;
-//            Vector<SymbolTable> st = new Vector<>();
-//            st.add(new ProgramSymbolTable());
-//            System.out.println(program.visit(st));
+            Program program = (Program) symbol.value;
+            Vector<SymbolTable> st = new Vector<>();
+            st.add(new ProgramSymbolTable());
+            String s = program.visit(st);
+            System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();
         }

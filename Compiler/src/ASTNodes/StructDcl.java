@@ -16,11 +16,34 @@ public class StructDcl implements CodeGeneratable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override
     public String visit(Vector<SymbolTable> symbolTableVector) {
-        return null;
+        String temp = "%struct.";
+        temp.concat(identifier);
+        temp.concat(" = type {");
+
+        int row = varDcls.size();
+        for (int i = 0; i < row; i++) {
+            // Accept VarDecls
+            temp += varDcls.getElement(i);
+
+            for (int j = 0; j < varDcls.getElement(i).varDclCnts.size(); j++) {
+                //not array in struct
+                if (varDcls.getElement(i).varDclCnts.getElement(j).expr == null) {
+
+                    temp.concat(varDcls.getElement(i).type.getValue());
+
+                    if ((i + 1) < row || (j + 1) < varDcls.size()) {
+                        temp.concat(",");
+                    }
+                } else {
+                    //TODO array in struct
+                }
+            }
+        }
+        return temp;
     }
 }

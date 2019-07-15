@@ -1637,7 +1637,7 @@ class CUP$Parser$actions {
             if (cbs == null) {
               cbs = new CaseBlock();
             }
-            ConstValue cv = new ConstValue(TypeEnum.INT, ic);
+              ConstValue cv = new ConstValue(new Type(TypeEnum.INT), ic);
             cbs.addElement(new Case(cv, b));
             RESULT = cbs;
 

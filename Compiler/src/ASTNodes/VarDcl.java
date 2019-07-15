@@ -19,7 +19,7 @@ public class VarDcl implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override

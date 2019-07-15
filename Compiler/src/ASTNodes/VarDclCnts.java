@@ -17,6 +17,13 @@ public class VarDclCnts implements CodeGeneratable {
         varDclCnts.add(vdc);
     }
 
+    public int size() {
+        return varDclCnts.size();
+    }
+
+    public VarDclCnt getElement(int index) {
+        return varDclCnts.get(index);
+    }
     public void fixVarDclCntAttributes(Type type, boolean isConstant) {
         for (VarDclCnt dclCnt : varDclCnts) {
             dclCnt.setType(type);

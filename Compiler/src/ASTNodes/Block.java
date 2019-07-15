@@ -1,6 +1,8 @@
 package ASTNodes;
 
 import ASTNodes.Interfaces.CodeGeneratable;
+import SymbolTables.BlockSymbolTable;
+import SymbolTables.FunctionSymbolTable;
 import SymbolTables.SymbolTable;
 
 import java.util.ArrayList;
@@ -19,11 +21,17 @@ public class Block implements CodeGeneratable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override
     public String visit(Vector<SymbolTable> symbolTableVector) {
-        return null;
+        SymbolTable st;
+        if (symbolTableVector.lastElement() instanceof FunctionSymbolTable)
+            st = (FunctionSymbolTable) symbolTableVector.lastElement();
+        else
+            st = (BlockSymbolTable) symbolTableVector.lastElement();
+        //symbolTableVector.add(st.getBlock())
+        return "";
     }
 }

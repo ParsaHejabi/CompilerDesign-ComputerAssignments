@@ -65,7 +65,7 @@ public class FuncDcl implements CodeGeneratable, SymbolTableCreatable {
 
     @Override
     public String generateCode() {
-        return null;
+        return "";
     }
 
     @Override

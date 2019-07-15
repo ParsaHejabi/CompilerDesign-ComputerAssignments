@@ -6,6 +6,7 @@ import SymbolTables.SymbolTable;
 import ASTNodes.Interfaces.SymbolTableCreatable;
 import SymbolTables.SymbolTableVariable;
 
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
@@ -46,14 +47,13 @@ public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
         if (expr != null) {
             instructions += expr.visit(symbolTableVector);
         }
-        String varType = type.getValue();
+        String varType = type.getTypeForLLVM();
         boolean isLocal = false;
         if (!((symbolTableVector.lastElement()) instanceof ProgramSymbolTable)) {
             isLocal = true;
         }
-
+        StringBuilder stringBuilder = new StringBuilder();
         if (isLocal) {
-            StringBuilder stringBuilder = new StringBuilder();
             //stringBuilder.append("%" + identifier + "_ptr = alloca ");
             // TODO add for n dimention array
             if (expr == null) {
@@ -65,11 +65,23 @@ public class VarDclCnt implements CodeGeneratable, SymbolTableCreatable {
                 stringBuilder.append("store " + varType + " " + ((ConstValue) expr).value + ", " + varType + "* %" + identifier + "_ptr" + "\n");
 
             }
+
             return stringBuilder.toString();
         } else {
+            //stringBuilder.append("@" + identifier + "_ptr = alloca ");
+            // TODO add for n dimention array
+            if (expr == null) {
+                varType = type.getTypeForLLVM();
+                stringBuilder.append("@" + identifier + "_ptr = alloca " + varType);
+            } else if (expr instanceof ConstValue) {
+                varType = ((ConstValue) expr).type.getTypeForLLVM();
+                stringBuilder.append("@" + identifier + "_ptr = alloca " + varType + "\n");
+                stringBuilder.append("store " + varType + " " + ((ConstValue) expr).value + ", " + varType + "* %" + identifier + "_ptr" + "\n");
+            }
+
 
         }
-        return null;
+        return stringBuilder.toString();
 
     }
 
