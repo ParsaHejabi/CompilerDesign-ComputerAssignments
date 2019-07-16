@@ -11,25 +11,25 @@ import java.util.Vector;
 public class Main {
     public static void main(String[] args) {
         String cppFilePath = new File("").getAbsolutePath();
-        try (FileReader fileReader = new FileReader(cppFilePath + "/src/test_files/test.cpp")) {
+        try (FileReader fileReader = new FileReader(cppFilePath + "/src/test_files/complete-test.cpp")) {
             ComplexSymbolFactory complexSymbolFactory = new ComplexSymbolFactory();
             Parser p = new Parser(new Scanner(fileReader, complexSymbolFactory), complexSymbolFactory);
-//            p.debug_parse();
+            p.debug_parse();
             Symbol symbol = p.parse();
             Program debug = (Program) symbol.value;
 //            System.out.println(debug);
 
-            Vector<SymbolTable> symbolTableVector = new Vector<>();
-            ProgramSymbolTable programSymbolTable = new ProgramSymbolTable();
-            symbolTableVector.add(programSymbolTable);
-            debug.createSymbolTable(symbolTableVector);
-            System.out.println("salam");
+//            Vector<SymbolTable> symbolTableVector = new Vector<>();
+//            ProgramSymbolTable programSymbolTable = new ProgramSymbolTable();
+//            symbolTableVector.add(programSymbolTable);
+//            debug.createSymbolTable(symbolTableVector);
+//            System.out.println("salam");
 
-            Program program = (Program) symbol.value;
-            Vector<SymbolTable> st = new Vector<>();
-            st.add(new ProgramSymbolTable());
-            String s = program.visit(st);
-            System.out.println(s);
+//            Program program = (Program) symbol.value;
+//            Vector<SymbolTable> st = new Vector<>();
+//            st.add(new ProgramSymbolTable());
+//            String s = program.visit(st);
+//            System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();
         }
